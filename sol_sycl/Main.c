@@ -6,6 +6,10 @@ solver
 
 #define MAIN
 #include "ofd.h"
+#ifdef _ONEAPI
+#undef C        // C is used for (2.99792458e8) but <CL/sycl.hpp> refuses it
+#include "ofd_dpcpp.h"
+#endif
 #undef MAIN
 
 #include "ofd_prototype.h"
@@ -39,6 +43,12 @@ int main(int argc, char *argv[])
 #ifdef _OPENMP
 	omp_set_num_threads(nthread);
 #endif
+
+        // set offload device
+#ifdef _ONEAPI
+        check_xpu(&myQ,0);
+#endif
+
 
 	// cpu time
 	cpu[0] = cputime();

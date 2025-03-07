@@ -7,6 +7,11 @@ alloc and free
 
 #include "ofd.h"
 
+#ifdef _ONEAPI
+#undef C	// C is used for (2.99792458e8) but <CL/sycl.hpp> refuses it
+#include "ofd_dpcpp.h"
+#endif
+
 void memalloc1(void)
 {
 	size_t size, xsize, ysize, zsize;
@@ -15,25 +20,46 @@ void memalloc1(void)
 	xsize = (Nx + 1) * sizeof(real_t);
 	ysize = (Ny + 1) * sizeof(real_t);
 	zsize = (Nz + 1) * sizeof(real_t);
+#ifdef _ONEAPI
+	RXn = (real_t *)malloc_shm(xsize);
+	RYn = (real_t *)malloc_shm(ysize);
+	RZn = (real_t *)malloc_shm(zsize);
+#else
 	RXn = (real_t *)malloc(xsize);
 	RYn = (real_t *)malloc(ysize);
 	RZn = (real_t *)malloc(zsize);
+#endif
 
 	xsize = (Nx + 0) * sizeof(real_t);
 	ysize = (Ny + 0) * sizeof(real_t);
 	zsize = (Nz + 0) * sizeof(real_t);
+#ifdef _ONEAPI
+	RXc = (real_t *)malloc_shm(xsize);
+	RYc = (real_t *)malloc_shm(ysize);
+	RZc = (real_t *)malloc_shm(zsize);
+#else
 	RXc = (real_t *)malloc(xsize);
 	RYc = (real_t *)malloc(ysize);
 	RZc = (real_t *)malloc(zsize);
+#endif
 
 	// material ID
 	size = NN * sizeof(id_t);
+#ifdef _ONEAPI
+	iEx = (id_t *)malloc_shm(size);
+	iEy = (id_t *)malloc_shm(size);
+	iEz = (id_t *)malloc_shm(size);
+	iHx = (id_t *)malloc_shm(size);
+	iHy = (id_t *)malloc_shm(size);
+	iHz = (id_t *)malloc_shm(size);
+#else
 	iEx = (id_t *)malloc(size);
 	iEy = (id_t *)malloc(size);
 	iEz = (id_t *)malloc(size);
 	iHx = (id_t *)malloc(size);
 	iHy = (id_t *)malloc(size);
 	iHz = (id_t *)malloc(size);
+#endif
 	memset(iEx, 0, size);
 	memset(iEy, 0, size);
 	memset(iEz, 0, size);
@@ -43,10 +69,21 @@ void memalloc1(void)
 
 	// material factor
 	size = NMaterial * sizeof(real_t);
+#ifdef _ONEAPI
+	C1 = (real_t *)malloc_shm(size);
+	C2 = (real_t *)malloc_shm(size);
+	C3 = (real_t *)malloc_shm(size);
+	C4 = (real_t *)malloc_shm(size);
+	D1 = (real_t *)malloc_shm(size);
+	D2 = (real_t *)malloc_shm(size);
+	D3 = (real_t *)malloc_shm(size);
+	D4 = (real_t *)malloc_shm(size);
+#else
 	C1 = (real_t *)malloc(size);
 	C2 = (real_t *)malloc(size);
 	D1 = (real_t *)malloc(size);
 	D2 = (real_t *)malloc(size);
+#endif
 	memset(C1, 0, size);
 	memset(C2, 0, size);
 	memset(D1, 0, size);
@@ -82,9 +119,15 @@ void memalloc1(void)
 
 	// ABC
 	if      (iABC == 0) {
+#ifdef _ONEAPI
+		fMurHx = (mur_t *)malloc_shm(numMurHx * sizeof(mur_t));
+		fMurHy = (mur_t *)malloc_shm(numMurHy * sizeof(mur_t));
+		fMurHz = (mur_t *)malloc_shm(numMurHz * sizeof(mur_t));
+#else
 		fMurHx = (mur_t *)malloc(numMurHx * sizeof(mur_t));
 		fMurHy = (mur_t *)malloc(numMurHy * sizeof(mur_t));
 		fMurHz = (mur_t *)malloc(numMurHz * sizeof(mur_t));
+#endif
 		memset(fMurHx, 0, numMurHx * sizeof(mur_t));
 		memset(fMurHy, 0, numMurHy * sizeof(mur_t));
 		memset(fMurHz, 0, numMurHz * sizeof(mur_t));
@@ -143,8 +186,13 @@ void memalloc1(void)
 	// feed
 	if (NFeed > 0) {
 		Feed_size = NFeed * (Solver.maxiter + 1) * sizeof(double);
+#ifdef _ONEAPI
+		VFeed = (double *)malloc_shm(Feed_size);
+		IFeed = (double *)malloc_shm(Feed_size);
+#else
 		VFeed = (double *)malloc(Feed_size);
 		IFeed = (double *)malloc(Feed_size);
+#endif
 	}
 
 	// point
@@ -160,8 +208,13 @@ void memalloc1(void)
 	// DFT factor
 	if (NFreq2 > 0) {
 		size = NFreq2 * (Solver.maxiter + 1) * sizeof(d_complex_t);
+#ifdef _ONEAPI
+		cEdft = (d_complex_t *)malloc_shm(size);
+		cHdft = (d_complex_t *)malloc_shm(size);
+#else
 		cEdft = (d_complex_t *)malloc(size);
 		cHdft = (d_complex_t *)malloc(size);
+#endif
 		memset(cEdft, 0, size);
 		memset(cHdft, 0, size);
 
@@ -174,10 +227,21 @@ void memalloc1(void)
 
 void memfree1(void)
 {
+#ifdef _ONEAPI
+	free_shm(C1);
+	free_shm(C2);
+	free_shm(C3);
+	free_shm(C4);
+	free_shm(D1);
+	free_shm(D2);
+	free_shm(D3);
+	free_shm(D4);
+#else
 	free(C1);
 	free(C2);
 	free(D1);
 	free(D2);
+#endif
 
 	if (VECTOR) {
 		free(K1Ex);
@@ -195,9 +259,15 @@ void memfree1(void)
 	}
 
 	if      (iABC == 0) {
+#ifdef _ONEAPI
+		free_shm(fMurHx);
+		free_shm(fMurHy);
+		free_shm(fMurHz);
+#else
 		free(fMurHx);
 		free(fMurHy);
 		free(fMurHz);
+#endif
 	}
 	else if (iABC == 1) {
 		free(fPmlEx);
@@ -229,6 +299,15 @@ void memfree1(void)
 	free(Yc);
 	free(Zc);
 
+#ifdef _ONEAPI
+	free_shm(RXn);
+	free_shm(RYn);
+	free_shm(RZn);
+
+	free_shm(RXc);
+	free_shm(RYc);
+	free_shm(RZc);
+#else
 	free(RXn);
 	free(RYn);
 	free(RZn);
@@ -236,6 +315,7 @@ void memfree1(void)
 	free(RXc);
 	free(RYc);
 	free(RZc);
+#endif
 
 	//free(Material);
 
@@ -247,7 +327,11 @@ void memfree1(void)
 	free(Hiter);
 
 	if (NFeed > 0) {
+#ifdef _ONEAPI
+		free_shm(Feed);
+#else
 		free(Feed);
+#endif
 	}
 
 	if (NFreq1 > 0) {
@@ -259,8 +343,13 @@ void memfree1(void)
 	}
 
 	if (NFeed > 0) {
+#ifdef _ONEAPI
+		free_shm(VFeed);
+		free_shm(IFeed);
+#else
 		free(VFeed);
 		free(IFeed);
+#endif
 	}
 
 	if (NPoint > 0) {
@@ -272,8 +361,13 @@ void memfree1(void)
 	}
 
 	if (NFreq2 > 0) {
+#ifdef _ONEAPI
+		free_shm(cEdft);
+		free_shm(cHdft);
+#else
 		free(cEdft);
 		free(cHdft);
+#endif
 		free(cFdft);
 	}
 }

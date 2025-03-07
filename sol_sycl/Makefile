@@ -1,8 +1,8 @@
 PROGRAM = ../ofd_sycl
 
-OMPOPT = -fopenmp
+OMPOPT  = -qopenmp
 
-OBJS    =         \
+OBJS    =           \
 Main.o            \
 input_data.o      \
 input2.o          \
@@ -66,22 +66,28 @@ writeout.o        \
 utils.o           \
 cputime.o         \
 plot3dGeom.o      \
+checkxpu.o	\
 ev3d.o
 
-CC      = gcc
-CFLAGS  = -Ofast -I../include -Wall
-CFLAGS  += $(OMPOPT)
-#CFLAGS  += -D_DOUBLE
-#CFLAGS  += -D_ID32
-LDFLAGS = -Ofast $(OMPOPT)
-LIBS    = -lm
+CC      = icpx
+CC2     = icx
+CFLAGS  = -g -O2 -fsycl -D_ONEAPI -I../include -Wall $(OMPOPT)
+#CFLAGS  = $(CFLAGS) /D_DOUBLE
+#CFLAGS  = $(CFLAGS) /D_ID32
+#LDFLAGS = /O2 /nologo
+LDFLAGS = -g -O2 -fsycl $(OMPOPT)
+LIBS    =
 
 $(PROGRAM): $(OBJS)
 	@echo "Loading $(PROGRAM) ... "
 	@$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
 
+ev3d.o: ev3d.c
+	$(CC2) -c -O2 $? 
+
 .c.o:
 	$(CC) -c $(CFLAGS) $<
 
 clean:
-	rm -f *.o
+	rm $(PROGRAM)
+	rm *.o

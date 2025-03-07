@@ -7,6 +7,11 @@ update Ey
 #include "ofd.h"
 #include "finc.h"
 
+#ifdef _ONEAPI
+#undef C	// C is used for (2.99792458e8) but <CL/sycl.hpp> refuses it
+#include "ofd_dpcpp.h"
+#endif
+
 static void updateEy_f_vector(void)
 {
 	assert(Nk == 1);
@@ -33,6 +38,7 @@ static void updateEy_f_no_vector(void)
 {
 	assert(Nk == 1);
 
+#ifndef _ONEAPI
 	int i;
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -49,6 +55,53 @@ static void updateEy_f_no_vector(void)
 		}
 	}
 	}
+#else  // _ONEAPI
+
+	sycl::range<3> updateBlock = sycl::range<3>(1, 4, 32);
+	sycl::range<3> grid(CEIL(iMax - iMin + 1, updateBlock[0]),
+		CEIL(jMax - jMin + 0, updateBlock[1]),
+		CEIL(kMax - kMin + 1, updateBlock[2]));
+	sycl::range<3> all_grid = grid * updateBlock;
+
+	myQ.submit([&](sycl::handler& h) {
+		auto iMin = ::iMin;
+		auto jMin = ::jMin;
+		auto kMin = ::kMin;
+		auto iMax = ::iMax;
+		auto jMax = ::jMax;
+		auto kMax = ::kMax;
+		auto N0 = ::N0;
+		auto Ni = ::Ni;
+		auto Nj = ::Nj;
+		auto Nk = ::Nk;
+		auto Hx = ::Hx;
+		auto Ey = ::Ey;
+		auto Hz = ::Hz;
+		auto iEy = ::iEy;
+		auto C1 = ::C1;
+		auto C2 = ::C2;
+		auto RZn = ::RZn;
+		auto RXn = ::RXn;
+		h.parallel_for(
+			sycl::nd_range<3>(all_grid, updateBlock),
+			[=](sycl::nd_item<3> idx) {
+				auto i = iMin + idx.get_global_id(0);
+				auto j = jMin + idx.get_global_id(1);
+				auto k = kMin + idx.get_global_id(2);
+				if ((i <= iMax) &&
+					(j < jMax) &&
+					(k <= kMax)) {
+					const int64_t n = NA(i, j, k);
+					int64_t n1 = n - Nk;
+					int64_t n2 = n - Ni;
+					Ey[n] = C1[iEy[n]] * Ey[n]
+						+ C2[iEy[n]] * (RZn[k] * (Hx[n] - Hx[n1])
+							- RXn[i] * (Hz[n] - Hz[n2]));
+				}
+			});
+		});
+	myQ.wait();
+#endif // _ONEAPI
 }
 
 
@@ -82,6 +135,7 @@ static void updateEy_p_no_vector(double t)
 {
 	assert(Nk == 1);
 
+#ifndef _ONEAPI
 	int i;
 #ifdef _OPENMP
 #pragma omp parallel for
@@ -113,6 +167,78 @@ static void updateEy_p_no_vector(double t)
 		}
 	}
 	}
+#else  // _ONEAPI
+
+	sycl::range<3> updateBlock = sycl::range<3>(1, 4, 32);
+	sycl::range<3> grid(CEIL(iMax - iMin + 1, updateBlock[0]),
+		CEIL(jMax - jMin + 0, updateBlock[1]),
+		CEIL(kMax - kMin + 1, updateBlock[2]));
+	sycl::range<3> all_grid = grid * updateBlock;
+
+	myQ.submit([&](sycl::handler& h) {
+		auto s_t = (real_t)t;
+		auto SPlanewave = ::SPlanewave;
+		real_t s_Dt = (real_t)Dt;
+		auto iMin = ::iMin;
+		auto jMin = ::jMin;
+		auto kMin = ::kMin;
+		auto iMax = ::iMax;
+		auto jMax = ::jMax;
+		auto kMax = ::kMax;
+		auto N0 = ::N0;
+		auto Ni = ::Ni;
+		auto Nj = ::Nj;
+		auto Nk = ::Nk;
+		auto Hx = ::Hx;
+		auto Ey = ::Ey;
+		auto Hz = ::Hz;
+		auto iEy = ::iEy;
+		auto s_Xn = ::s_Xn;
+		auto s_Yc = ::s_Yc;
+		auto s_Zn = ::s_Zn;
+		auto C1 = ::C1;
+		auto C2 = ::C2;
+		auto C3 = ::C3;
+		auto C4 = ::C4;
+		auto RZn = ::RZn;
+		auto RXn = ::RXn;
+		h.parallel_for(
+			sycl::nd_range<3>(all_grid, updateBlock),
+			[=](sycl::nd_item<3> idx) {
+				auto i = iMin + idx.get_global_id(0);
+				auto j = jMin + idx.get_global_id(1);
+				auto k = kMin + idx.get_global_id(2);
+				if ((i <= iMax) &&
+					(j < jMax) &&
+					(k <= kMax)) {
+					const int64_t n = NA(i, j, k);
+					const int64_t n1 = n - Nk;
+					const int64_t n2 = n - Ni;
+					const id_t m = iEy[n];
+					if (m == 0) {
+						Ey[n] += RZn[k] * (Hx[n] - Hx[n1])
+							- RXn[i] * (Hz[n] - Hz[n2]);
+					}
+					else {
+						real_t fi, dfi;
+						finc_s(s_Xn[i], s_Yc[j], s_Zn[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[1], SPlanewave->ai, s_Dt, &fi, &dfi);
+						if (m == PEC) {
+							Ey[n] = -fi;
+						}
+						else {
+							Ey[n] = C1[m] * Ey[n]
+								+ C2[m] * (RZn[k] * (Hx[n] - Hx[n1])
+									- RXn[i] * (Hz[n] - Hz[n2]))
+								- C3[m] * dfi
+								- C4[m] * fi;
+						}
+					}
+				}
+			});
+		});
+
+	myQ.wait();
+#endif // _ONEAPI
 }
 
 

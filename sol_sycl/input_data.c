@@ -7,6 +7,22 @@ input data
 #include "ofd.h"
 #include "ofd_prototype.h"
 
+#ifdef _ONEAPI
+#undef C
+#include "ofd_dpcpp.h"
+
+void* realloc_shm(void* ptr, size_t size, const sycl::queue& q)
+{
+        if (ptr == NULL) {
+                return ((void*)sycl::malloc_shared(size, q));
+        }
+        void* new_ptr = sycl::malloc_shared(size, q);
+        memcpy(new_ptr, ptr, size);
+        sycl::free(ptr, q);
+        return new_ptr;
+}
+#endif
+
 #define MAXTOKEN 1000
 
 
@@ -274,6 +290,11 @@ int input_data(FILE *fp)
 		}
 		else if (!strcmp(strkey, "feed")) {
 			if (ntoken > 8) {
+#ifdef _ONEAPI
+                Feed  = (feed_t *)realloc_shm(Feed,  (NFeed + 1) * sizeof(feed_t),myQ);
+#else
+                Feed  = (feed_t *)realloc(Feed,  (NFeed + 1) * sizeof(feed_t));
+#endif
 				Feed  = (feed_t *)realloc(Feed,  (NFeed + 1) * sizeof(feed_t));
 				xfeed = (double *)realloc(xfeed, (NFeed + 1) * sizeof(double));
 				yfeed = (double *)realloc(yfeed, (NFeed + 1) * sizeof(double));
