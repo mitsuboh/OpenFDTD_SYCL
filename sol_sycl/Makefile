@@ -1,0 +1,93 @@
+PROGRAM = ../ofd_sycl
+
+OMPOPT  = -qopenmp
+
+OBJS    =           \
+Main.o            \
+input_data.o      \
+input2.o          \
+monitor.o         \
+memallocfree1.o   \
+memallocfree2.o   \
+memallocfree3.o   \
+setup.o           \
+setup_vector.o    \
+setupId.o         \
+setupSize.o       \
+setupDispersion.o \
+setupDft.o        \
+setupMurHx.o      \
+setupMurHy.o      \
+setupMurHz.o      \
+setupPmlEx.o      \
+setupPmlEy.o      \
+setupPmlEz.o      \
+setupPmlHx.o      \
+setupPmlHy.o      \
+setupPmlHz.o      \
+setupPml.o        \
+solve.o           \
+initfield.o       \
+updateEx.o        \
+updateEy.o        \
+updateEz.o        \
+updateHx.o        \
+updateHy.o        \
+updateHz.o        \
+dispersionEx.o    \
+dispersionEy.o    \
+dispersionEz.o    \
+vfeed.o           \
+efeed.o           \
+eload.o           \
+vpoint.o          \
+murH.o            \
+pmlEx.o           \
+pmlEy.o           \
+pmlEz.o           \
+pmlHx.o           \
+pmlHy.o           \
+pmlHz.o           \
+pbcx.o            \
+pbcy.o            \
+pbcz.o            \
+dftNear3d.o       \
+nearfield_c.o     \
+average.o         \
+outputChars.o     \
+outputZin.o       \
+outputSpara.o     \
+outputCoupling.o  \
+outputCross.o     \
+ingeometry.o      \
+geomlines.o       \
+farfield.o        \
+writeout.o        \
+utils.o           \
+cputime.o         \
+plot3dGeom.o      \
+checkxpu.o	\
+ev3d.o
+
+CC      = icpx
+CC2     = icx
+CFLAGS  = -g -O2 -fsycl -D_ONEAPI -I../include -Wall $(OMPOPT)
+#CFLAGS  = $(CFLAGS) /D_DOUBLE
+#CFLAGS  = $(CFLAGS) /D_ID32
+#LDFLAGS = /O2 /nologo
+LDFLAGS = -g -O2 -fsycl $(OMPOPT)
+LIBS    =
+
+$(PROGRAM): $(OBJS)
+	@echo "Loading $(PROGRAM) ... "
+	@$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
+
+ev3d.o: ev3d.c
+	$(CC2) -c -O2 $? 
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+clean:
+	rm $(PROGRAM)
+	rm *.o

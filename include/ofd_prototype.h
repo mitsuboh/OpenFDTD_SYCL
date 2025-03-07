@@ -6,7 +6,9 @@
 #endif
 
 #ifdef __cplusplus
+#if !defined(SYCL_LANGUAGE_VERSION) || !defined (__INTEL_LLVM_COMPILER)
 extern "C" {
+#endif
 #endif
 
 // C
@@ -125,7 +127,9 @@ extern void        mpi_init(int, char **);
 extern void        mpi_close(void);
 
 #ifdef __cplusplus
+#if !defined(SYCL_LANGUAGE_VERSION) || !defined (__INTEL_LLVM_COMPILER)
 }
+#endif
 #endif
 
 // C + CUDA
