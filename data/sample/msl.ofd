@@ -1,0 +1,31 @@
+OpenFDTD 4 2
+title = microstrip line
+xmesh = -0.01 60 0.05
+ymesh = -0.016 80 0.016
+zmesh = -0.001 2 0 24 0.012
+material = 1 4 0 1 0 誘電体材料
+geometry = 2 1 0 0.05 -0.016 0.016 0 0.001
+name = 誘電体基板
+geometry = 1 1 -0.01 0.05 -0.016 0.016 -0.001 0
+name = グラウンド板
+geometry = 1 1 0 0.05 -0.0008 0.0008 0.001 0.001
+name = 線路
+geometry = 1 1 0 0 0 0 0 0.001
+name = 給電線
+feed = Z 0 0 0.0001 1 0 50
+point = Z 0.04 0 0.0001 +X
+frequency1 = 1e9 6e9 20
+frequency2 = 3e9 3e9 0
+solver = 3000 100 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotzin = 1
+plotspara = 1
+plotnear2d = E Z 0.005
+plotnear2d = E X 0.04
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

@@ -1,0 +1,96 @@
+PROGRAM = ../ofd_cuda
+
+OBJS    =           \
+Main.o              \
+info_gpu.o          \
+check_gpu.o         \
+cuda_memory.o       \
+setup_gpu.o         \
+memallocfree2_gpu.o \
+memallocfree3_gpu.o \
+solve.o             \
+initfield.o         \
+updateEx.o          \
+updateEy.o          \
+updateEz.o          \
+updateHx.o          \
+updateHy.o          \
+updateHz.o          \
+dispersionEx.o      \
+dispersionEy.o      \
+dispersionEz.o      \
+efeed.o             \
+eload.o             \
+vpoint.o            \
+murH.o              \
+pmlEx.o             \
+pmlEy.o             \
+pmlEz.o             \
+pmlHx.o             \
+pmlHy.o             \
+pmlHz.o             \
+pbcx.o              \
+pbcy.o              \
+pbcz.o              \
+dftNear3d.o         \
+average.o           \
+../sol/input_data.o        \
+../sol/input2.o            \
+../sol/monitor.o           \
+../sol/memallocfree1.o     \
+../sol/memallocfree3.o     \
+../sol/setup.o             \
+../sol/setupSize.o         \
+setup_vector.o      \
+setupId.o           \
+../sol/setupDispersion.o   \
+../sol/setupDft.o          \
+../sol/setupMurHx.o        \
+../sol/setupMurHy.o        \
+../sol/setupMurHz.o        \
+../sol/setupPmlEx.o        \
+../sol/setupPmlEy.o        \
+../sol/setupPmlEz.o        \
+../sol/setupPmlHx.o        \
+../sol/setupPmlHy.o        \
+../sol/setupPmlHz.o        \
+../sol/setupPml.o          \
+../sol/vfeed.o             \
+../sol/nearfield_c.o       \
+../sol/outputChars.o       \
+../sol/outputZin.o         \
+../sol/outputSpara.o       \
+../sol/outputCoupling.o    \
+../sol/outputCross.o       \
+../sol/ingeometry.o        \
+../sol/geomlines.o         \
+../sol/farfield.o          \
+../sol/writeout.o          \
+../sol/utils.o             \
+../sol/cputime.o           \
+../sol/plot3dGeom.o        \
+../sol/ev3d.o
+
+CC      = nvcc
+CFLAGS  = -O2 -I../include
+#CFLAGS  += -D_DOUBLE
+#CFLAGS  += -D_ID32
+LDFLAGS = -O2
+LIBS    =
+
+$(PROGRAM): $(OBJS)
+	@echo "Loading $(PROGRAM) ... "
+	@$(CC) -o $(PROGRAM) $(LDFLAGS) $(OBJS) $(LIBS)
+
+.SUFFIXES: .cu
+
+.cu.o:
+	$(CC) -c $(CFLAGS) $<
+
+setup_vector.o: ../sol/setup_vector.c
+	$(CC) -c $(CFLAGS) $?
+setupId.o: ../sol/setupId.c
+	$(CC) -c $(CFLAGS) $?
+
+clean:
+	rm -f *.o

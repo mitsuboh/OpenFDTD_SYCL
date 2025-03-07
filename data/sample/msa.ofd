@@ -1,0 +1,37 @@
+OpenFDTD 4 2
+title = microstrip antenna
+xmesh = -0.02 20 0 20 0.02 16 0.036 14 0.05
+ymesh = -0.015 10 -0.0062 12 0.002 4 0.0043 3 0.0062 10 0.015
+zmesh = -0.0008 1 0 1 0.0008 12 0.012
+material = 1 2.2 0 1 0 誘電体材料
+geometry = 2 1 -0.02 0.05 -0.015 0.015 0 0.0008
+name = 誘電体基板
+geometry = 1 1 -0.02 0.05 -0.015 0.015 -0.0008 0
+name = グラウンド板
+geometry = 1 1 -0.02 0.02 0.002 0.0043 0.0008 0.0008
+name = 線路
+geometry = 1 1 0.02 0.036 -0.0062 0.0062 0.0008 0.0008
+name = アンテナ
+feed = Z -0.01 0.00315 0.0001 1 0 50
+point = Z 0.01 0.00315 0.0001 +X
+frequency1 = 5e9 10e9 100
+frequency2 = 7e9 7e9 0
+solver = 5000 100 0.001
+#plot3dgeom = 1
+plotiter = 1
+plotspara = 1
+plotfar1d = X 72
+far1dstyle = 0
+far1dcomponent = 1 1 0
+far1ddb = 1
+plotfar2d = 18 36
+far2dcomponent = 1 0 0 0 0 0 0
+far2ddb = 1
+far2dobj = 0.5
+plotnear2d = E Z 0.003
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

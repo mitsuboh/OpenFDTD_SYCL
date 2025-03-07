@@ -1,0 +1,21 @@
+OpenFDTD 4 2
+title = dipole antenna coupling
+xmesh = -0.05 40 0.15
+ymesh = -0.05 20 0.05
+zmesh = -0.075 10 -0.025 5 -0.0025 1 0.0025 5 0.025 10 0.075
+geometry = 1 1 0 0 0 0 -0.025 0.025
+name = 送信アンテナ
+geometry = 1 1 0.1 0.1 0 0 -0.025 -0.0025
+name = 受信アンテナ1
+geometry = 1 1 0.1 0.1 0 0 0.025 0.0025
+name = 受信アンテナ2
+feed = Z 0 0 0 1 0 50
+point = Z 0.1 0 0 +X
+abc = 1 5 2 1e-5
+frequency1 = 2e9 3e9 10
+frequency2 = 2.5e9 2.5e9 0
+solver = 1000 100 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotcoupling = 1
+end

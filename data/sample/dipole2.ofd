@@ -1,0 +1,31 @@
+OpenFDTD 4 2
+title = two dipoles
+xmesh = -0.1 40 0.1
+ymesh = -0.05 20 0.05
+zmesh = -0.075 10 -0.025 11 0.025 10 0.075
+material = 1 2.0 0.0 1.0 0.0
+geometry = 1 1 0.025 0.025 0 0 -0.025 0.025
+name = 素子1
+geometry = 1 1 -0.025 -0.025 0 0 -0.025 0.025
+name = 素子2
+feed = Z 0.025 0 0 1 0 50
+feed = Z -0.025 0 0 1 1.666e-10 50
+frequency1 = 2e9 3e9 10
+frequency2 = 3e9 3e9 0
+solver = 1000 100 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotsmith = 1
+plotzin = 1
+plotyin = 1
+plotref = 1
+plotfar1d = Z 72
+far1dstyle = 0
+far1dcomponent = 1 0 0
+far1ddb = 1
+far1dscale = -30 10 8
+plotfar2d = 18 36
+far2dcomponent = 1 0 0 0 0 0 0
+far2ddb = 1
+far2dobj = 0.5
+end

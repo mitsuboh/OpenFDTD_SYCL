@@ -1,0 +1,32 @@
+OpenFDTD 4 2
+title = microstrip filter
+xmesh = -0.04 20 -0.02 18 -0.002 1 -0.0012 4 0.0012 1 0.002 18 0.02
+ymesh = -0.02 10 -0.0102 6 -0.0045 4 -0.0021 6 0.0021 4 0.0045 6 0.0102 10 0.02
+zmesh = -0.0004 1 0 4 0.0016 20 0.015
+material = 1 2.2 0 1 0 誘電体材料
+geometry = 2 1 -0.04 0.02 -0.02 0.02 0 0.0008
+name = 誘電体基板
+geometry = 1 1 -0.04 0.02 -0.02 0.02 -0.0004 0
+name = グラウンド板
+geometry = 1 1 -0.04 -0.0012 0.0021 0.0045 0.0008 0.0008
+name = 線路in
+geometry = 1 1 0.02 0.0012 -0.0021 -0.0045 0.0008 0.0008
+name = 線路out
+geometry = 1 1 -0.0012 0.0012 -0.0102 0.0102 0.0008 0.0008
+name = フィルター
+feed = Z -0.03 0.0033 0.0001 1 0 50
+point = Z -0.01 0.0033 0.0001 +X
+point = Z 0.01 -0.0033 0.0001
+frequency1 = 2e9 12e9 100
+frequency2 = 4.7e9 7.0e9 1
+solver = 5000 100 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotspara = 1
+plotnear2d = E Z 0.003
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

@@ -1,0 +1,34 @@
+OpenFDTD 4 2
+title = inverted F antenna
+xmesh = -0.04 40 0.04
+ymesh = -0.05 50 0.05
+zmesh = -0.16 100 0.04
+geometry = 1 1 -0.004 0 -0.03 0.03 -0.12 0
+name = 筐体
+geometry = 1 1 0.004 0.004 -0.01 0.022 0 -0.046
+name = 放射板
+geometry = 1 1 0 0.004 0.002 0.002 0 0
+name = 短絡線
+geometry = 1 1 0 0.004 0.004 0.004 0 0
+name = 給電線
+feed = X 0.0001 0.004 0 1 0 50
+rfeed = 10
+abc = 1 5 2 1e-5
+frequency1 = 900e6 1100e6 100
+frequency2 = 1000e6 1000e6 0
+solver = 10000 200 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotsmith = 1
+plotzin = 1
+plotyin = 1
+plotref = 1
+plotfar1d = X 72
+far1dstyle = 0
+far1dcomponent = 1 0 0
+far1ddb = 1
+plotfar2d = 18 36
+far2dcomponent = 1 0 0 0 0 0 0
+far2ddb = 1
+far2dobj = 0.5
+end

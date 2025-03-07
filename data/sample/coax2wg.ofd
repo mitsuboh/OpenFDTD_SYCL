@@ -1,0 +1,35 @@
+OpenFDTD 4 2
+title = coax to wg
+xmesh = -0.005 41 0.2
+ymesh = -0.055 22 0.055
+zmesh = -0.03 12 0.03
+material = 1 2 0 1 0
+geometry = 2 1 0.025 0.035 -0.005 0.005 -0.025 0.025
+name = 支持材
+geometry = 1 1 -0.005 0.2 -0.055 -0.05 -0.03 0.03
+name = -Y壁
+geometry = 1 1 -0.005 0.2 0.055 0.05 -0.03 0.03
+name = +Y壁
+geometry = 1 1 -0.005 0.2 -0.055 0.055 -0.03 -0.025
+name = -Z壁
+geometry = 1 1 -0.005 0.2 -0.055 0.055 0.03 0.025
+name = +Z壁
+geometry = 1 1 -0.005 0 -0.055 0.055 -0.03 0.03
+name = 終端
+geometry = 1 1 0.03 0.03 0 0 -0.025 -0.005
+name = プローブ
+feed = Z 0.03 0 -0.024 1 0 50
+abc = 1 5 2 1E-05
+frequency1 = 1E09 3E09 100
+frequency2 = 2.6E09 2.6E09 0
+solver = 5000 200 0.001
+#plot3dgeom = 1
+plotiter = 1
+plotref = 1
+plotnear2d = E Z 0.01
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

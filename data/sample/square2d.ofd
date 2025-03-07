@@ -1,0 +1,24 @@
+OpenFDTD 4 2
+title = square (2D)
+xmesh = -0.15 30 0.15
+ymesh = -0.15 30 0.15
+zmesh = -0.01 2 0.01
+geometry = 1 1 -0.05 0.05 -0.05 0.05 -0.01 0.01
+planewave = 90 0 1
+pbc = 0 0 1
+frequency1 = 3e9 3e9 0
+frequency2 = 3e9 3e9 0
+solver = 1000 50 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotfar1d = Z 180
+far1dstyle = 0
+far1dcomponent = 1 0 0
+far1ddb = 1
+plotnear2d = E Z 0
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

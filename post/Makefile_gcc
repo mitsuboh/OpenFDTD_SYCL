@@ -1,0 +1,64 @@
+PROGRAM = ../ofd_post
+
+OMPOPT  = -fopenmp
+
+OBJS    =         \
+Main.o            \
+post_data.o       \
+readout.o         \
+post.o            \
+outputFar0d.o     \
+outputFar1d.o     \
+outputFar2d.o     \
+outputNear1d.o    \
+outputNear2d.o    \
+calcFar1d.o       \
+calcFar2d.o       \
+calcNear1d.o      \
+calcNear2d.o      \
+plot2dIter.o      \
+plot2dFeed.o      \
+plot2dPoint.o     \
+plot2dFreq.o      \
+plot2dFreq0.o     \
+plot2dFar0d0.o    \
+plot2dFar1d0.o    \
+plot3dFar2d.o     \
+plot3dFar2d0.o    \
+plot2dNear1d0.o   \
+plot2dNear2d0.o   \
+plot3dNear2d0.o   \
+planewave.o       \
+../sol/nearfield_c.o     \
+../sol/farfield.o        \
+../sol/outputCoupling.o  \
+../sol/utils.o           \
+ev2dlib.o         \
+ev3dlib.o         \
+ev2d.o            \
+../sol/ev3d.o
+
+CC      = gcc
+CFLAGS  = -Ofast -I../include -Wall
+#CFLAGS  += -D_VECTOR
+#CFLAGS  += -D_DOUBLE
+#CFLAGS  += -D_ID32
+LDFLAGS = -Ofast $(OMPOPT)
+LIBS    = -lm
+
+$(PROGRAM): $(OBJS)
+	@echo "Loading $(PROGRAM) ... "
+	@$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
+
+Main.o: Main.c
+	$(CC) -c $(CFLAGS) $(OMPOPT) $?
+calcFar1d.o: calcFar1d.c
+	$(CC) -c $(CFLAGS) $(OMPOPT) $?
+calcFar2d.o: calcFar2d.c
+	$(CC) -c $(CFLAGS) $(OMPOPT) $?
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+clean:
+	rm -f *.o

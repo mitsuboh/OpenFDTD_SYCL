@@ -1,0 +1,102 @@
+PROGRAM = ../ofd_mpi
+
+OMPOPT  = -fopenmp
+MPIOPT  = -D_MPI
+
+OBJS    =         \
+Main.o            \
+solve.o           \
+setup_mpi.o       \
+comm.o            \
+comm_X.o          \
+comm_Y.o          \
+comm_Z.o          \
+../sol/updateEx.o        \
+../sol/updateEy.o        \
+../sol/updateEz.o        \
+../sol/updateHx.o        \
+../sol/updateHy.o        \
+../sol/updateHz.o        \
+../sol/dispersionEx.o    \
+../sol/dispersionEy.o    \
+../sol/dispersionEz.o    \
+../sol/input_data.o      \
+../sol/input2.o          \
+../sol/monitor.o         \
+../sol/memallocfree1.o   \
+../sol/memallocfree2.o   \
+../sol/memallocfree3.o   \
+../sol/setup.o           \
+../sol/setupSize.o       \
+../sol/setup_vector.o    \
+../sol/setupId.o         \
+../sol/setupDispersion.o \
+../sol/setupDft.o        \
+../sol/setupMurHx.o      \
+../sol/setupMurHy.o      \
+../sol/setupMurHz.o      \
+../sol/setupPmlEx.o      \
+../sol/setupPmlEy.o      \
+../sol/setupPmlEz.o      \
+../sol/setupPmlHx.o      \
+../sol/setupPmlHy.o      \
+../sol/setupPmlHz.o      \
+../sol/setupPml.o        \
+../sol/initfield.o       \
+../sol/vfeed.o           \
+../sol/efeed.o           \
+../sol/eload.o           \
+../sol/vpoint.o          \
+../sol/average.o         \
+../sol/murH.o            \
+../sol/pmlEx.o           \
+../sol/pmlEy.o           \
+../sol/pmlEz.o           \
+../sol/pmlHx.o           \
+../sol/pmlHy.o           \
+../sol/pmlHz.o           \
+../sol/pbcx.o            \
+../sol/pbcy.o            \
+../sol/pbcz.o            \
+../sol/dftNear3d.o       \
+../sol/nearfield_c.o     \
+../sol/outputChars.o     \
+../sol/outputZin.o       \
+../sol/outputSpara.o     \
+../sol/outputCoupling.o  \
+../sol/outputCross.o     \
+../sol/ingeometry.o      \
+../sol/geomlines.o       \
+../sol/farfield.o        \
+../sol/writeout.o        \
+../sol/utils.o           \
+../sol/plot3dGeom.o      \
+../sol/ev3d.o
+
+CC      = mpicc
+CFLAGS  = -O2 -I../include -Wall
+#CFLAGS  += -D_DOUBLE
+#CFLAGS  += -D_ID32
+LDFLAGS = -O2 $(OMPOPT)
+LIBS    = -lm
+
+$(PROGRAM): $(OBJS)
+	@echo "Loading $(PROGRAM) ... "
+	@$(CC) $(LDFLAGS) -o $(PROGRAM) $(OBJS) $(LIBS)
+
+Main.o: Main.c
+	$(CC) -c $(CFLAGS) $(OMPOPT) $?
+comm.o: comm.c
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+comm_X.o: comm_X.c
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+comm_Y.o: comm_Y.c
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+comm_Z.o: comm_Z.c
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+
+clean:
+	rm -f *.o

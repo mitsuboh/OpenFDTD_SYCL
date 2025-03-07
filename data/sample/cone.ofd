@@ -1,0 +1,24 @@
+OpenFDTD 4 2
+title = cone
+xmesh = -0.15 60 0.15
+ymesh = -0.15 60 0.15
+zmesh = -0.15 60 0.15
+geometry = 1 51 -0.06 0.06 0 0 0.2 0.16 0.08 0.1
+planewave = 90 0 1
+frequency1 = 3e9 3e9 0
+frequency2 = 3e9 3e9 0
+solver = 2000 50 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotfar1d = Y 180
+far1dstyle = 0
+far1dcomponent = 1 0 0
+far1ddb = 1
+plotnear2d = E Z 0
+plotnear2d = E X 0
+near2ddim = 1 1
+near2ddb = 0
+near2dcontour = 0
+near2dobj = 1
+near2dnoinc = 0
+end

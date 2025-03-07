@@ -1,0 +1,109 @@
+PROGRAM = ../ofd_cuda_mpi
+
+MPIOPT  = -D_MPI -I$(MPI_INCLUDE)
+
+OBJS    =           \
+Main.o              \
+solve.o             \
+comm_cuda_X.o       \
+comm_cuda_Y.o       \
+comm_cuda_Z.o       \
+info_gpu_mpi.o      \
+rank2device.o       \
+../cuda/check_gpu.o         \
+../cuda/cuda_memory.o       \
+../cuda/setup_gpu.o         \
+../cuda/memallocfree2_gpu.o \
+../cuda/memallocfree3_gpu.o \
+../cuda/initfield.o         \
+../cuda/updateEx.o          \
+../cuda/updateEy.o          \
+../cuda/updateEz.o          \
+../cuda/updateHx.o          \
+../cuda/updateHy.o          \
+../cuda/updateHz.o          \
+../cuda/dispersionEx.o      \
+../cuda/dispersionEy.o      \
+../cuda/dispersionEz.o      \
+../cuda/murH.o              \
+../cuda/pmlEx.o             \
+../cuda/pmlEy.o             \
+../cuda/pmlEz.o             \
+../cuda/pmlHx.o             \
+../cuda/pmlHy.o             \
+../cuda/pmlHz.o             \
+../cuda/pbcx.o              \
+../cuda/pbcy.o              \
+../cuda/pbcz.o              \
+../cuda/efeed.o             \
+../cuda/eload.o             \
+../cuda/vpoint.o            \
+../cuda/dftNear3d.o         \
+../cuda/average.o           \
+../sol/input_data.o        \
+../sol/input2.o            \
+../sol/monitor.o           \
+../sol/memallocfree1.o     \
+../sol/memallocfree3.o     \
+../sol/setup.o             \
+../sol/setupSize.o         \
+setup_vector.o      \
+setupId.o           \
+../sol/setupDispersion.o   \
+../sol/setupDft.o          \
+../sol/setupMurHx.o        \
+../sol/setupMurHy.o        \
+../sol/setupMurHz.o        \
+../sol/setupPmlEx.o        \
+../sol/setupPmlEy.o        \
+../sol/setupPmlEz.o        \
+../sol/setupPmlHx.o        \
+../sol/setupPmlHy.o        \
+../sol/setupPmlHz.o        \
+../sol/setupPml.o          \
+../sol/vfeed.o             \
+../sol/nearfield_c.o       \
+../sol/outputChars.o       \
+../sol/outputZin.o         \
+../sol/outputSpara.o       \
+../sol/outputCoupling.o    \
+../sol/outputCross.o       \
+../sol/ingeometry.o        \
+../sol/geomlines.o         \
+../sol/farfield.o          \
+../sol/writeout.o          \
+../sol/utils.o             \
+../sol/plot3dGeom.o        \
+../sol/ev3d.o              \
+../mpi/setup_mpi.o         \
+../mpi/comm.o
+
+CC      = nvcc
+CFLAGS  = -O2 -I../include
+#CFLAGS  += -D_DOUBLE
+#CFLAGS  += -D_ID32
+LDFLAGS = -O2 -L$(MPI_LIB)
+LIBS    = -lmpi
+
+$(PROGRAM): $(OBJS)
+	@echo "Loading $(PROGRAM) ... "
+	@$(CC) -o $(PROGRAM) $(LDFLAGS) $(OBJS) $(LIBS)
+
+.SUFFIXES: .cu
+
+comm_cuda_X.o: comm_cuda_X.cu
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+comm_cuda_Y.o: comm_cuda_Y.cu
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+comm_cuda_Z.o: comm_cuda_Z.cu
+	$(CC) -c $(CFLAGS) $(MPIOPT) $?
+setup_vector.o: ../sol/setup_vector.c
+	$(CC) -c $(CFLAGS) $?
+setupId.o: ../sol/setupId.c
+	$(CC) -c $(CFLAGS) $?
+
+.cu.o:
+	$(CC) -c $(CFLAGS) $<
+
+clean:
+	rm -f *.o

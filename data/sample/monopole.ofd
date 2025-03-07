@@ -1,0 +1,29 @@
+OpenFDTD 4 2
+title = monopole antenna
+xmesh = -0.05 50 0.05
+ymesh = -0.05 50 0.05
+zmesh = -0.02 10 0 25 0.05
+geometry = 1 1 -0.03 0.03 -0.03 0.03 -0.002 0
+name = グラウンド板
+geometry = 1 1 0 0 0 0 0 0.025
+name = モノポール
+feed = Z 0 0 0.0001 1 0 50
+abc = 1 5 2 1e-5
+frequency1 = 2e9 3e9 20
+frequency2 = 3e9 3e9 0
+solver = 5000 100 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotsmith = 1
+plotzin = 1
+plotyin = 1
+plotfar1d = X 72
+far1dstyle = 0
+far1dcomponent = 1 0 0
+far1ddb = 1
+far1dscale = -30 10 8
+plotfar2d = 18 36
+far2dcomponent = 1 0 0 0 0 0 0
+far2ddb = 1
+far2dobj = 0.5
+end

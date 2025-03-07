@@ -1,0 +1,35 @@
+OpenFDTD 4 2
+title = patch antenna
+xmesh = -0.05 50 0.05
+ymesh = -0.05 50 0.05
+zmesh = -0.002 1 0 1 0.002 9 0.02
+material = 1 2.2 0 1 0
+geometry = 2 1 -0.05 0.05 -0.05 0.05 0 0.002
+name = 基板
+geometry = 1 1 -0.05 0.05 -0.05 0.05 -0.002 0
+name = グラウンド板
+geometry = 1 1 -0.018 0.018 -0.018 0.018 0.002 0.002
+name = パッチ
+geometry = 1 1 0.004 0.004 0.004 0.004 0 0.002
+name = 給電線
+feed = Z 0.004 0.004 0.0001 1 0 50
+rfeed = 5
+abc = 1 5 2 1e-5
+frequency1 = 2300e6 2700e6 80
+frequency2 = 2500e6 2500e6 0
+solver = 20000 200 1e-3
+#plot3dgeom = 1
+plotiter = 1
+plotsmith = 1
+plotzin = 1
+plotyin = 1
+plotref = 1
+plotfar1d = X 72
+far1dstyle = 0
+far1dcomponent = 1 1 0
+far1ddb = 1
+plotfar2d = 18 36
+far2dcomponent = 1 0 0 0 0 0 0
+far2ddb = 1
+far2dobj = 0.5
+end
