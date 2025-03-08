@@ -295,7 +295,6 @@ int input_data(FILE *fp)
 #else
                 Feed  = (feed_t *)realloc(Feed,  (NFeed + 1) * sizeof(feed_t));
 #endif
-				Feed  = (feed_t *)realloc(Feed,  (NFeed + 1) * sizeof(feed_t));
 				xfeed = (double *)realloc(xfeed, (NFeed + 1) * sizeof(double));
 				yfeed = (double *)realloc(yfeed, (NFeed + 1) * sizeof(double));
 				zfeed = (double *)realloc(zfeed, (NFeed + 1) * sizeof(double));
