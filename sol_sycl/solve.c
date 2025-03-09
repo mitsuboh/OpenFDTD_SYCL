@@ -5,6 +5,8 @@ solve.c
 #include "ofd.h"
 #include "ofd_prototype.h"
 
+extern void		setup_xpl(void);
+
 void solve(int io, double *tdft, FILE *fp)
 {
 	double fmax[] = {0, 0};
@@ -13,6 +15,11 @@ void solve(int io, double *tdft, FILE *fp)
 
 	// initial field
 	initfield();
+
+#ifdef _ONEAPI
+        // setup xpu local memory
+        setup_xpl();
+#endif
 
 	// time step iteration
 	int itime;
