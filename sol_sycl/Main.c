@@ -9,6 +9,7 @@ solver
 #ifdef _ONEAPI
 #undef C        // C is used for (2.99792458e8) but <CL/sycl.hpp> refuses it
 #include "ofd_dpcpp.h"
+int TARGXPU = 0;
 #endif
 #undef MAIN
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
 
         // set offload device
 #ifdef _ONEAPI
-        check_xpu(&myQ,0);
+        check_xpu(&myQ,TARGXPU);
 #endif
 
 
@@ -181,6 +182,17 @@ static void args(int argc, char *argv[],
 				break;
 			}
 		}
+#ifdef _ONEAPI
+		if (!strcmp(*argv, "-txp")) {
+			if (--argc) {
+				TARGXPU = atoi(*++argv);
+				if (TARGXPU < 1) TARGXPU = 0;
+			}
+			else {
+				break;
+			}
+		}
+#endif
 		else if (!strcmp(*argv, "-no-vector")) {
 			VECTOR = 0;
 		}
