@@ -66,7 +66,8 @@ writeout.o        \
 utils.o           \
 cputime.o         \
 plot3dGeom.o      \
-checkxpu.o		\
+checkxpu.o	\
+setup_xpl.o	\
 ev3d.obj
 
 CC      = icpx.exe

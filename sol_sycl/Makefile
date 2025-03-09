@@ -67,6 +67,7 @@ utils.o           \
 cputime.o         \
 plot3dGeom.o      \
 checkxpu.o	\
+setup_xpl.o	\
 ev3d.o
 
 CC      = icpx
