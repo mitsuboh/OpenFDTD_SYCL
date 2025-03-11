@@ -31,7 +31,7 @@ void murH(int64_t num, mur_t *fmur, real_t *hh)
 		const int i1 = fmur[n].i1;
 		const int j1 = fmur[n].j1;
 		const int k1 = fmur[n].k1;
-		h[NA(i, j, k)] = fmur[n].f
+		hh[NA(i, j, k)] = fmur[n].f
 		               + fmur[n].g * (hh[NA(i1, j1, k1)] - hh[NA(i, j, k)]);
 		fmur[n].f = hh[NA(i1, j1, k1)];
 	}
