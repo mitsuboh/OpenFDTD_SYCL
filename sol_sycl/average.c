@@ -64,7 +64,7 @@ void average(double fsum[])
 	float* sumH = static_cast<float*> malloc_shm(wgroup_num * sizeof(float));
 	float* sumE = static_cast<float*> malloc_shm(wgroup_num * sizeof(float));
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -81,9 +81,9 @@ void average(double fsum[])
 		auto Ex = ::Ex;
 		auto Ey = ::Ey;
 		auto Ez = ::Ez;
-		sycl::local_accessor<real_t> se(wgroup_size, h);
-		sycl::local_accessor<real_t> sh(wgroup_size, h);
-		h.parallel_for(
+		sycl::local_accessor<real_t> se(wgroup_size, hndl);
+		sycl::local_accessor<real_t> sh(wgroup_size, hndl);
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, sumBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin + idx.get_global_id(0);
@@ -118,14 +118,14 @@ void average(double fsum[])
 	float shf = 0;
 	sycl::buffer<float> shfBuf{ &shf, 1 };
 
-	myQ.submit([&](sycl::handler& h) {
-		h.parallel_for(sycl::range<1>(wgroup_num),sycl::reduction(sefBuf, h, sycl::plus<>()),
+	myQ.submit([&](sycl::handler& hndl) {
+		hndl.parallel_for(sycl::range<1>(wgroup_num),sycl::reduction(sefBuf, hndl, sycl::plus<>()),
 		[=](sycl::id<1> idx, auto& sum) {
 				sum += sumE[idx];
 		});
 	});
-	myQ.submit([&](sycl::handler& h) {
-		h.parallel_for(sycl::range<1>(wgroup_num), sycl::reduction(shfBuf, h, sycl::plus<>()),
+	myQ.submit([&](sycl::handler& hndl) {
+		hndl.parallel_for(sycl::range<1>(wgroup_num), sycl::reduction(shfBuf, hndl, sycl::plus<>()),
 		[=](sycl::id<1> idx,auto& sum) {
 				sum += sumH[idx];
 		});

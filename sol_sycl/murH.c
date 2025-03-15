@@ -11,7 +11,7 @@ Mur for Hx/Hy/Hz
 #include "ofd_dpcpp.h"
 #endif
 
-void murH(int64_t num, mur_t *fmur, real_t *hh)
+void murH(int64_t num, mur_t *fmur, real_t *h)
 {
 #ifndef _ONEAPI
 	int64_t n;
@@ -31,9 +31,9 @@ void murH(int64_t num, mur_t *fmur, real_t *hh)
 		const int i1 = fmur[n].i1;
 		const int j1 = fmur[n].j1;
 		const int k1 = fmur[n].k1;
-		hh[NA(i, j, k)] = fmur[n].f
-		               + fmur[n].g * (hh[NA(i1, j1, k1)] - hh[NA(i, j, k)]);
-		fmur[n].f = hh[NA(i1, j1, k1)];
+		h[NA(i, j, k)] = fmur[n].f
+		               + fmur[n].g * (h[NA(i1, j1, k1)] - h[NA(i, j, k)]);
+		fmur[n].f = h[NA(i1, j1, k1)];
 	}
 #else // _ONEAPI
 	const int murBlock = 256;
@@ -41,13 +41,13 @@ void murH(int64_t num, mur_t *fmur, real_t *hh)
 	sycl::range<1> grid(CEIL(num, murBlock));
 	sycl::range<1> all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto Ni = ::Ni;
 		auto Nj = ::Nj;
 		auto Nk = ::Nk;
 		auto N0 = ::N0;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<1>(all_grid, updateBlock),
 			[=](sycl::nd_item<1> idx) {
 				const int64_t n = idx.get_global_id(0);
@@ -58,9 +58,9 @@ void murH(int64_t num, mur_t *fmur, real_t *hh)
 					const int i1 = fmur[n].i1;
 					const int j1 = fmur[n].j1;
 					const int k1 = fmur[n].k1;
-					hh[NA(i, j, k)] = fmur[n].f
-						+ fmur[n].g * (hh[NA(i1, j1, k1)] - hh[NA(i, j, k)]);
-					fmur[n].f = hh[NA(i1, j1, k1)];
+					h[NA(i, j, k)] = fmur[n].f
+						+ fmur[n].g * (h[NA(i1, j1, k1)] - h[NA(i, j, k)]);
+					fmur[n].f = h[NA(i1, j1, k1)];
 				}
 			});
 		});

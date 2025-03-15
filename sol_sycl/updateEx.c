@@ -64,7 +64,7 @@ static void updateEx_f_no_vector(void)
 		CEIL(kMax - kMin + 1, updateBlock[2]));
 	sycl::range<3> all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -83,7 +83,7 @@ static void updateEx_f_no_vector(void)
 		auto C2 = ::C2;
 		auto RYn = ::RYn;
 		auto RZn = ::RZn;
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				auto i = iMin + idx.get_global_id(0);
@@ -177,7 +177,7 @@ static void updateEx_p_no_vector(double t)
 		CEIL(kMax - kMin + 1, updateBlock[2]));
 	sycl::range<3> all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto s_t = (real_t)t;
 		auto SPlanewave = ::SPlanewave;
 		real_t s_Dt = (real_t)Dt;
@@ -204,7 +204,7 @@ static void updateEx_p_no_vector(double t)
 		auto C4 = ::C4;
 		auto RYn = ::RYn;
 		auto RZn = ::RZn;
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				auto i = iMin + idx.get_global_id(0);

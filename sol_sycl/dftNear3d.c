@@ -50,7 +50,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 1, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -65,7 +65,7 @@ void dftNear3d(int itime)
 		auto cEx_r = ::cEx_r;
 		auto cEx_i = ::cEx_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin + idx.get_global_id(0);
@@ -104,7 +104,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 1, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -119,7 +119,7 @@ void dftNear3d(int itime)
 		auto cEy_r = ::cEy_r;
 		auto cEy_i = ::cEy_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin + idx.get_global_id(0);
@@ -158,7 +158,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 0, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -173,7 +173,7 @@ void dftNear3d(int itime)
 		auto cEz_r = ::cEz_r;
 		auto cEz_i = ::cEz_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin + idx.get_global_id(0);
@@ -210,7 +210,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 2, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -225,7 +225,7 @@ void dftNear3d(int itime)
 		auto cHx_r = ::cHx_r;
 		auto cHx_i = ::cHx_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin - 1 + idx.get_global_id(0);
@@ -263,7 +263,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 2, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -278,7 +278,7 @@ void dftNear3d(int itime)
 		auto cHy_r = ::cHy_r;
 		auto cHy_i = ::cHy_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin - 1 + idx.get_global_id(0);
@@ -316,7 +316,7 @@ void dftNear3d(int itime)
 		CEIL(kMax - kMin + 3, updateBlock[2]));
 	all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -331,7 +331,7 @@ void dftNear3d(int itime)
 		auto cHz_r = ::cHz_r;
 		auto cHz_i = ::cHz_i;
 
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<3>(all_grid, updateBlock),
 			[=](sycl::nd_item<3> idx) {
 				const int i = iMin - 1 + idx.get_global_id(0);
