@@ -90,7 +90,7 @@ SYCL_EXTERNAL double vfeed(double,double,double);
 	sycl::range<1> grid(CEIL(NFeed, Block));
 	sycl::range<1> all_grid = grid * updateBlock;
 
-	myQ.submit([&](sycl::handler& h) {
+	myQ.submit([&](sycl::handler& hndl) {
 		auto iMin = ::iMin;
 		auto jMin = ::jMin;
 		auto kMin = ::kMin;
@@ -117,7 +117,7 @@ SYCL_EXTERNAL double vfeed(double,double,double);
 		int maxiter_l = Solver.maxiter;
 		auto rFeed = ::rFeed;
 		auto Tw = ::Tw;
-		h.parallel_for(
+		hndl.parallel_for(
 			sycl::nd_range<1>(all_grid, updateBlock),
 			[=](sycl::nd_item<1> idx) {
 				const int64_t ifeed = idx.get_global_id(0);
