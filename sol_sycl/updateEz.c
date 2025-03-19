@@ -92,10 +92,11 @@ static void updateEz_f_no_vector(void)
 					(j <= jMax) &&
 					(k < kMax)) {
 					const int64_t n = NA(i, j, k);
-					int64_t n1 = n - Ni;
-					int64_t n2 = n - Nj;
-					Ez[n] = C1[iEz[n]] * Ez[n]
-						+ C2[iEz[n]] * (RXn[i] * (Hy[n] - Hy[n1])
+					const int64_t m = iEz[n];
+					const int64_t n1 = n - Ni;
+					const int64_t n2 = n - Nj;
+					Ez[n] = C1[m] * Ez[n]
+						+ C2[m] * (RXn[i] * (Hy[n] - Hy[n1])
 							- RYn[j] * (Hx[n] - Hx[n2]));
 				}
 			});
@@ -198,8 +199,6 @@ static void updateEz_p_no_vector(double t)
 		auto s_Zc = ::s_Zc;
 		auto C1 = ::C1;
 		auto C2 = ::C2;
-		auto C3 = ::C3;
-		auto C4 = ::C4;
 		auto RXn = ::RXn;
 		auto RYn = ::RYn;
 		hndl.parallel_for(
@@ -212,9 +211,9 @@ static void updateEz_p_no_vector(double t)
 					(j <= jMax) &&
 					(k < kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iEz[n];
 					const int64_t n1 = n - Ni;
 					const int64_t n2 = n - Nj;
-					const id_t m = iEz[n];
 					if (m == 0) {
 						Ez[n] += RXn[i] * (Hy[n] - Hy[n1])
 							- RYn[j] * (Hx[n] - Hx[n2]);
@@ -229,8 +228,8 @@ static void updateEz_p_no_vector(double t)
 							Ez[n] = C1[m] * Ez[n]
 								+ C2[m] * (RXn[i] * (Hy[n] - Hy[n1])
 									- RYn[j] * (Hx[n] - Hx[n2]))
-								- C3[m] * dfi
-								- C4[m] * fi;
+								- (C1[m] - C2[m]) * dfi
+								- (1 - C1[m]) * fi;
 						}
 					}
 				}

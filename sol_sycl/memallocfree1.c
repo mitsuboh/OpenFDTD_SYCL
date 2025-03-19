@@ -72,12 +72,8 @@ void memalloc1(void)
 #ifdef _ONEAPI
 	C1 = (real_t *)malloc_shm(size);
 	C2 = (real_t *)malloc_shm(size);
-	C3 = (real_t *)malloc_shm(size);
-	C4 = (real_t *)malloc_shm(size);
 	D1 = (real_t *)malloc_shm(size);
 	D2 = (real_t *)malloc_shm(size);
-	D3 = (real_t *)malloc_shm(size);
-	D4 = (real_t *)malloc_shm(size);
 #else
 	C1 = (real_t *)malloc(size);
 	C2 = (real_t *)malloc(size);
@@ -230,12 +226,8 @@ void memfree1(void)
 #ifdef _ONEAPI
 	free_shm(C1);
 	free_shm(C2);
-	free_shm(C3);
-	free_shm(C4);
 	free_shm(D1);
 	free_shm(D2);
-	free_shm(D3);
-	free_shm(D4);
 #else
 	free(C1);
 	free(C2);

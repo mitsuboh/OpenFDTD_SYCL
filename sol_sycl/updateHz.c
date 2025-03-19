@@ -93,20 +93,12 @@ static void updateHz_f_no_vector(void)
 					(j < jMax) &&
 					(k <= kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iHz[n];
 					const int64_t n1 = n + Ni;
 					const int64_t n2 = n + Nj;
-					Hz[n] = D1[iHz[n]] * Hz[n]
-			     			 - D2[iHz[n]] * (RXc[i] * (Ey[n1] - Ey[n])
+					Hz[n] = D1[m] * Hz[n]
+			     			 - D2[m] * (RXc[i] * (Ey[n1] - Ey[n])
 			               		     - RYc[j] * (Ex[n2] - Ex[n]));
-/*
-					const int64_t n = NA2(i, j, k);
-					int64_t n1 = n + Ni_l;
-					int64_t n2 = n + Nj_l;
-					const id_t m = iHz_l[n];
-					Hz_l[n] = d1[m] * Hz_l[n]
-						- d2[m] * (rxc[i] * (Ey_l[n1] - Ey_l[n])
-							- ryc[j] * (Ex_l[n2] - Ex_l[n]));
-*/
 				}
 			});
 		});
@@ -209,8 +201,6 @@ static void updateHz_p_no_vector(double t)
 		auto s_Zn = ::s_Zn;
 		auto D1 = ::D1;
 		auto D2 = ::D2;
-		auto D3 = ::D3;
-		auto D4 = ::D4;
 		auto RXc = ::RXc;
 		auto RYc = ::RYc;
 		hndl.parallel_for(
@@ -222,10 +212,10 @@ static void updateHz_p_no_vector(double t)
 				if ((i < iMax) &&
 					(j < jMax) &&
 					(k <= kMax)) {
-					int64_t n = NA(i, j, k);
-					int64_t n1 = n + Ni;
-					int64_t n2 = n + Nj;
-					const id_t m = iHz[n];
+					const int64_t n = NA(i, j, k);
+					const int64_t m = iHz[n];
+					const int64_t n1 = n + Ni;
+					const int64_t n2 = n + Nj;
 					if (m == 0) {
 						Hz[n] -= RXc[i] * (Ey[n1] - Ey[n])
 							- RYc[i] * (Ex[n2] - Ex[n]);
@@ -241,8 +231,8 @@ static void updateHz_p_no_vector(double t)
 							Hz[n] = D1[m] * Hz[n]
 								- D2[m] * (RXc[i] * (Ey[n1] - Ey[n])
 									- RYc[j] * (Ex[n2] - Ex[n]))
-								- D3[m] * dfi
-								- D4[m] * fi;
+								- (D1[m] - D2[m]) * dfi
+								- (1 - D1[m]) * fi;
 						}
 					}
 				}

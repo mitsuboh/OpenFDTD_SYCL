@@ -45,13 +45,13 @@ EXTERN real_t* d_RXn, * d_RYn, * d_RZn;
 EXTERN real_t* d_RXc, * d_RYc, * d_RZc;
 EXTERN id_t *d_iEx, *d_iEy, *d_iEz;        // material ID of E
 EXTERN id_t *d_iHx, *d_iHy, *d_iHz;        // material ID of H
-EXTERN real_t* d_C1, * d_C2, * d_C3, * d_C4;
-EXTERN real_t* d_D1, * d_D2, * d_D3, * d_D4;
+EXTERN real_t* d_C1, * d_C2;
+EXTERN real_t* d_D1, * d_D2;
 EXTERN mur_t* d_fMurHx, * d_fMurHy, * d_fMurHz;
 EXTERN feed_t * d_Feed;
 EXTERN double * d_VFeed, * d_IFeed;
-EXTERN real_t       *d_Ex_r, *d_Ex_i, *d_Ey_r, *d_Ey_i, *d_Ez_r, *d_Ez_i;
-EXTERN real_t       *d_Hx_r, *d_Hx_i, *d_Hy_r, *d_Hy_i, *d_Hz_r, *d_Hz_i;
+EXTERN real_t       *d_cEx_r, *d_cEx_i, *d_cEy_r, *d_cEy_i, *d_cEz_r, *d_cEz_i;
+EXTERN real_t       *d_cHx_r, *d_cHx_i, *d_cHy_r, *d_cHy_i, *d_cHz_r, *d_cHz_i;
 
 extern void             check_xpu(sycl::queue * ,int);
 

@@ -265,8 +265,8 @@ EXTERN real_t       *Hx, *Hy, *Hz;           // H
 EXTERN id_t         *iEx, *iEy, *iEz;        // material ID of E
 EXTERN id_t         *iHx, *iHy, *iHz;        // material ID of H
 
-EXTERN real_t       *C1, *C2, *C3, *C4;                // E factor
-EXTERN real_t       *D1, *D2, *D3, *D4;                // H factor
+EXTERN real_t       *C1, *C2;                // E factor
+EXTERN real_t       *D1, *D2;                // H factor
 EXTERN real_t       *K1Ex, *K2Ex, *K1Ey, *K2Ey, *K1Ez, *K2Ez;  // E factor
 EXTERN real_t       *K1Hx, *K2Hx, *K1Hy, *K2Hy, *K1Hz, *K2Hz;  // H factor
 

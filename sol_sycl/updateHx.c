@@ -93,10 +93,11 @@ static void updateHx_f_no_vector(void)
 					(j < jMax) &&
 					(k < kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iHx[n];
 					const int64_t n1 = n + Nj;
 					const int64_t n2 = n + Nk;
-					Hx[n] = D1[iHx[n]] * Hx[n]
-					      - D2[iHx[n]] * (RYc[j] * (Ez[n1] - Ez[n])
+					Hx[n] = D1[m] * Hx[n]
+					      - D2[m] * (RYc[j] * (Ez[n1] - Ez[n])
 					                    - RZc[k] * (Ey[n2] - Ey[n]));
 				}
 			});
@@ -199,8 +200,6 @@ static void updateHx_p_no_vector(double t)
 		auto s_Zc = ::s_Zc;
 		auto D1 = ::D1;
 		auto D2 = ::D2;
-		auto D3 = ::D3;
-		auto D4 = ::D4;
 		auto RYc = ::RYc;
 		auto RZc = ::RZc;
 		hndl.parallel_for(
@@ -213,9 +212,9 @@ static void updateHx_p_no_vector(double t)
 					(j < jMax) &&
 					(k < kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iHx[n];
 					const int64_t n1 = n + Nj;
 					const int64_t n2 = n + Nk;
-					const id_t m = iHx[n];
 					if (m == 0) {
 						Hx[n] -= RYc[j] * (Ez[n1] - Ez[n])
 							- RZc[k] * (Ey[n2] - Ey[n]);
@@ -230,8 +229,8 @@ static void updateHx_p_no_vector(double t)
 							Hx[n] = D1[m] * Hx[n]
 								- D2[m] * (RYc[j] * (Ez[n1] - Ez[n])
 									- RZc[k] * (Ey[n2] - Ey[n]))
-								- D3[m] * dfi
-								- D4[m] * fi;
+								- (D1[m] - D2[m]) * dfi
+								- (1 - D1[m]) * fi;
 						}
 					}
 				}

@@ -93,10 +93,11 @@ static void updateEx_f_no_vector(void)
 					(j <= jMax) &&
 					(k <= kMax)) {
 					const int64_t n = NA(i, j, k);
-					int64_t n1 = n - Nj;
-					int64_t n2 = n - Nk;
-					Ex[n] = C1[iEx[n]] * Ex[n]
-						+ C2[iEx[n]] * (RYn[j] * (Hz[n] - Hz[n1])
+					const int64_t m = iEx[n];
+					const int64_t n1 = n - Nj;
+					const int64_t n2 = n - Nk;
+					Ex[n] = C1[m] * Ex[n]
+						+ C2[m] * (RYn[j] * (Hz[n] - Hz[n1])
 							- RZn[k] * (Hy[n] - Hy[n2]));
 				}
 			});
@@ -200,8 +201,6 @@ static void updateEx_p_no_vector(double t)
 		auto s_Zn = ::s_Zn;
 		auto C1 = ::C1;
 		auto C2 = ::C2;
-		auto C3 = ::C3;
-		auto C4 = ::C4;
 		auto RYn = ::RYn;
 		auto RZn = ::RZn;
 		hndl.parallel_for(
@@ -214,9 +213,9 @@ static void updateEx_p_no_vector(double t)
 					(j <= jMax) &&
 					(k <= kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iEx[n];
 					const int64_t n1 = n - Nj;
 					const int64_t n2 = n - Nk;
-					const id_t m = iEx[n];
 					if (m == 0) {
 						Ex[n] += RYn[j] * (Hz[n] - Hz[n1])
 							- RZn[k] * (Hy[n] - Hy[n2]);
@@ -230,9 +229,9 @@ static void updateEx_p_no_vector(double t)
 						else {
 							Ex[n] = C1[m] * Ex[n]
 								+ C2[m] * (RYn[j] * (Hz[n] - Hz[n1])
-									- RZn[k] * (Hy[n] - Hy[n2]))
-								- C3[m] * dfi
-								- C4[m] * fi;
+								- RZn[k] * (Hy[n] - Hy[n2]))
+								- (C1[m] - C2[m]) * dfi
+								- (1 - C1[m]) * fi;
 						}
 					}
 				}

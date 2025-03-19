@@ -93,11 +93,12 @@ static void updateHy_f_no_vector(void)
 					(j <= jMax) &&
 					(k < kMax)) {
 					const int64_t n = NA(i, j, k);
+					const int64_t m = iHy[n];
 					const int64_t n1 = n + Nk;
 					const int64_t n2 = n + Ni;
-					Hy[n] = D1[iHy[n]] * Hy[n]
-			      			- D2[iHy[n]] * (RZc[k] * (Ex[n1] - Ex[n])
-			                    	- RXc[i] * (Ez[n2] - Ez[n]));
+					Hy[n] = D1[m] * Hy[n]
+			      			- D2[m] * (RZc[k] * (Ex[n1] - Ex[n])
+			                    		- RXc[i] * (Ez[n2] - Ez[n]));
 				}
 			});
 		});
@@ -200,8 +201,6 @@ static void updateHy_p_no_vector(double t)
 		auto s_Zc = ::s_Zc;
 		auto D1 = ::D1;
 		auto D2 = ::D2;
-		auto D3 = ::D3;
-		auto D4 = ::D4;
 		auto RXc = ::RXc;
 		auto RZc = ::RZc;
 		hndl.parallel_for(
@@ -213,10 +212,10 @@ static void updateHy_p_no_vector(double t)
 				if ((i < iMax) &&
 					(j <= jMax) &&
 					(k < kMax)) {
-					int64_t n = NA(i, j, k);
-					int64_t n1 = n + Nk;
-					int64_t n2 = n + Ni;
-					const id_t m = iHy[n];
+					const int64_t n = NA(i, j, k);
+					const int64_t m = iHy[n];
+					const int64_t n1 = n + Nk;
+					const int64_t n2 = n + Ni;
 					if (m == 0) {
 						Hy[n] -= RZc[k] * (Ex[n1] - Ex[n])
 							- RXc[i] * (Ez[n2] - Ez[n]);
@@ -232,8 +231,8 @@ static void updateHy_p_no_vector(double t)
 							Hy[n] = D1[m] * Hy[n]
 								- D2[m] * (RZc[k] * (Ex[n1] - Ex[n])
 									- RXc[i] * (Ez[n2] - Ez[n]))
-								- D3[m] * dfi
-								- D4[m] * fi;
+								- (D1[m] - D2[m]) * dfi
+								- (1-D1[m]) * fi;
 						}
 					}
 				}
