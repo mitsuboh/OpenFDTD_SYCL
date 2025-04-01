@@ -39,22 +39,39 @@ void memalloc2(void)
 		xsize = numPmlEx * sizeof(real_t);
 		ysize = numPmlEy * sizeof(real_t);
 		zsize = numPmlEz * sizeof(real_t);
+#ifdef _ONEAPI
+		Exy = (real_t *)malloc_shm(xsize);
+		Exz = (real_t *)malloc_shm(xsize);
+		Eyz = (real_t *)malloc_shm(ysize);
+		Eyx = (real_t *)malloc_shm(ysize);
+		Ezx = (real_t *)malloc_shm(zsize);
+		Ezy = (real_t *)malloc_shm(zsize);
+#else
 		Exy = (real_t *)malloc(xsize);
 		Exz = (real_t *)malloc(xsize);
 		Eyz = (real_t *)malloc(ysize);
 		Eyx = (real_t *)malloc(ysize);
 		Ezx = (real_t *)malloc(zsize);
 		Ezy = (real_t *)malloc(zsize);
-
+#endif
 		xsize = numPmlHx * sizeof(real_t);
 		ysize = numPmlHy * sizeof(real_t);
 		zsize = numPmlHz * sizeof(real_t);
+#ifdef _ONEAPI
+		Hxy = (real_t *)malloc_shm(xsize);
+		Hxz = (real_t *)malloc_shm(xsize);
+		Hyz = (real_t *)malloc_shm(ysize);
+		Hyx = (real_t *)malloc_shm(ysize);
+		Hzx = (real_t *)malloc_shm(zsize);
+		Hzy = (real_t *)malloc_shm(zsize);
+#else
 		Hxy = (real_t *)malloc(xsize);
 		Hxz = (real_t *)malloc(xsize);
 		Hyz = (real_t *)malloc(ysize);
 		Hyx = (real_t *)malloc(ysize);
 		Hzx = (real_t *)malloc(zsize);
 		Hzy = (real_t *)malloc(zsize);
+#endif
 	}
 }
 
@@ -93,6 +110,21 @@ void memfree2(void)
 #endif
 
 	if      (iABC == 1) {
+#ifdef _ONEAPI
+		free_shm(Exy);
+		free_shm(Exz);
+		free_shm(Eyz);
+		free_shm(Eyx);
+		free_shm(Ezx);
+		free_shm(Ezy);
+
+		free_shm(Hxy);
+		free_shm(Hxz);
+		free_shm(Hyz);
+		free_shm(Hyx);
+		free_shm(Hzx);
+		free_shm(Hzy);
+#else
 		free(Exy);
 		free(Exz);
 		free(Eyz);
@@ -106,5 +138,6 @@ void memfree2(void)
 		free(Hyx);
 		free(Hzx);
 		free(Hzy);
+#endif
 	}
 }
