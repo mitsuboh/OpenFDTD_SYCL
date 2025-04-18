@@ -55,8 +55,8 @@ dftNear3d.obj       \
 nearfield_c.obj     \
 average.obj         \
 outputChars.obj     \
-outputZin.obj       \
-outputSpara.obj     \
+outputFeed.obj       \
+outputPoint.obj     \
 outputCoupling.obj  \
 outputCross.obj     \
 ingeometry.obj      \
