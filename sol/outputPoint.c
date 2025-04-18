@@ -1,7 +1,7 @@
 /*
-outputSpara.c
+outputPoint.c
 
-S-parameters
+output point data
 */
 
 #include "ofd.h"
@@ -53,7 +53,8 @@ void calcSpara(void)
 	free(cv);
 }
 
-static void _outputSpara(FILE *fp)
+
+void outputSpara(FILE *fp)
 {
 	fprintf(fp, "=== S-parameters ===\n");
 
@@ -75,8 +76,48 @@ static void _outputSpara(FILE *fp)
 	fflush(fp);
 }
 
-void outputSpara(FILE *fp)
+
+void outputPoint(const char fn_point[])
 {
-	_outputSpara(stdout);
-	_outputSpara(fp);
+	FILE *fp;
+	if ((fp = fopen(fn_point, "w")) == NULL) {
+		fprintf(stderr, "*** %s open error.\n", fn_point);
+		return;
+	}
+
+	for (int ipoint = 0; ipoint < NPoint; ipoint++) {
+		fprintf(fp, "point #%d (waveform)\n", ipoint + 1);
+		fprintf(fp, "%s\n", "    No.    time[sec]      V[V]");
+		for (int itime = 0; itime < Ntime; itime++) {
+			const int id = ipoint * (Solver.maxiter + 1) + itime;
+			fprintf(fp, "%7d %13.5e %13.5e\n", itime, itime * Dt, VPoint[id]);
+		}
+	}
+
+	for (int ipoint = 0; ipoint < NPoint; ipoint++) {
+		fprintf(fp, "point #%d (spectrum)\n", ipoint + 1);
+		fprintf(fp, "%s\n", " No. frequency[Hz]  amplitude   degree");
+		for (int ifreq = 0; ifreq < NFreq1; ifreq++) {
+			// DFT
+			const d_complex_t vsum = calcdft(Ntime, &VPoint[ipoint * (Solver.maxiter + 1)], Freq1[ifreq], Dt, 0);
+			fprintf(fp, "%4d %13.5e %9.5f %9.3f\n", ifreq, Freq1[ifreq], d_abs(vsum), d_deg(vsum));
+		}
+	}
+
+	fflush(fp);
+	fclose(fp);
 }
+
+/*
+void outputPoint(int ilog, FILE *fp, const char fn_point[])
+{
+	// ofd.log and stdout
+	if (ilog) {
+		_outputSpara(stdout);
+		_outputSpara(fp);
+	}
+
+	// point.log
+	_outputPoint(fn_point);
+}
+*/

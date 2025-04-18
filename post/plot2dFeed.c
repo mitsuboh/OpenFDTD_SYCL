@@ -25,14 +25,14 @@ void plot2dFeed(void)
 	const double y1 = 0.10 * Height2d;
 	const double y2 = 0.90 * Height2d;
 	const double h = Fontsize2d;
-
+/*
 	// open
 	FILE *fp;
-	if ((fp = fopen(FN_feed, "w")) == NULL) {
-		fprintf(stderr, "*** %s open error.\n", FN_feed);
+	if ((fp = fopen(fn_feed, "w")) == NULL) {
+		fprintf(stderr, "*** %s open error.\n", fn_feed);
 		return;
 	}
-
+*/
 	// === waveform ===
 
 	for (int ifeed = 0; ifeed < NFeed; ifeed++) {
@@ -95,7 +95,7 @@ void plot2dFeed(void)
 		// feed #
 		sprintf(str1, "feed #%d", ifeed + 1);
 		ev2d_drawString(x2 - 6.0 * h, y2 + 0.5 * h, h, str1);
-
+/*
 		// log
 		fprintf(fp, "feed #%d (waveform)\n", ifeed + 1);
 		fprintf(fp, "%s\n", "    No.    time[sec]      V[V]          I[A]");
@@ -103,6 +103,7 @@ void plot2dFeed(void)
 			int id = ifeed * (Solver.maxiter + 1) + itime;
 			fprintf(fp, "%7d %13.5e %13.5e %13.5e\n", itime, itime * Dt, fabs(VFeed[id]), fabs(IFeed[id]));
 		}
+*/
 	}
 
 	// === spectrum ===
@@ -177,19 +178,21 @@ void plot2dFeed(void)
 		// feed #
 		sprintf(str1, "feed #%d", ifeed + 1);
 		ev2d_drawString(x2 - 6.0 * h, y2 + 0.5 * h, h, str1);
-
+/*
 		// log
 		fprintf(fp, "feed #%d (spectrum)\n", ifeed + 1);
 		fprintf(fp, "%s\n", " No. frequency[Hz]       V          I");
 		for (int ifreq = 0; ifreq < NFreq1; ifreq++) {
 			fprintf(fp, "%4d %13.5e %10.5f %10.5f\n", ifreq, Freq1[ifreq], vsp[ifreq], isp[ifreq]);
 		}
+*/
 	}
 
 	// free
 	free(vsp);
 	free(isp);
-
+/*
 	// close
 	fclose(fp);
+*/
 }

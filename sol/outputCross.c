@@ -1,7 +1,7 @@
 /*
 outputCross.c
 
-cross section
+output cross section
 */
 
 #include "ofd.h"
@@ -38,8 +38,7 @@ void outputCross(FILE *fp)
 	}
 
 	// output
-	_outputCross(stdout, bcs, fcs);
-	_outputCross(fp,     bcs, fcs);
+	_outputCross(fp, bcs, fcs);
 
 	// free
 	free(bcs);

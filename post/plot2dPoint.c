@@ -22,14 +22,14 @@ void plot2dPoint(void)
 	const double y1 = 0.10 * Height2d;
 	const double y2 = 0.90 * Height2d;
 	const double h = Fontsize2d;
-
+/*
 	// open
 	FILE *fp;
-	if ((fp = fopen(FN_point, "w")) == NULL) {
-		fprintf(stderr, "*** %s open error.\n", FN_point);
+	if ((fp = fopen(fn_point, "w")) == NULL) {
+		fprintf(stderr, "*** %s open error.\n", fn_point);
 		return;
 	}
-
+*/
 	// === waveform ===
 
 	for (int ipoint = 0; ipoint < NPoint; ipoint++) {
@@ -70,12 +70,12 @@ void plot2dPoint(void)
 
 		// title
 		ev2d_drawString(x1, y2 + 0.4 * h, h, Title);
-		ev2d_drawString(x1, y2 + 1.8 * h, h, "E waveform on points");
+		ev2d_drawString(x1, y2 + 1.8 * h, h, "waveform on points");
 
 		// Y-axis
 		sprintf(str1, "%.0e", pow(10, ymin));
 		sprintf(str2, "%.0e", pow(10, ymax));
-		ev2dlib_Yaxis(y1, y2, x1, h, str1, str2, "[V/m]");
+		ev2dlib_Yaxis(y1, y2, x1, h, str1, str2, "|V|");
 
 		// X-axis
 		sprintf(str2, "%d", Ntime - 1);
@@ -87,14 +87,15 @@ void plot2dPoint(void)
 		// point #
 		sprintf(str1, "point #%d", ipoint + 1);
 		ev2d_drawString(x2 - 6.0 * h, y2 + 0.5 * h, h, str1);
-
+/*
 		// log
 		fprintf(fp, "point #%d (waveform)\n", ipoint + 1);
-		fprintf(fp, "%s\n", "    No.    time[sec]      E[V/m]");
+		fprintf(fp, "%s\n", "    No.    time[sec]      V[V]");
 		for (int itime = 0; itime < Ntime; itime++) {
 			int id = ipoint * (Solver.maxiter + 1) + itime;
-			fprintf(fp, "%7d %13.5e %13.5e\n", itime, itime * Dt, fabs(VPoint[id]));
+			fprintf(fp, "%7d %13.5e %13.5e\n", itime, itime * Dt, VPoint[id]);
 		}
+*/
 	}
 
 	// === spectrum ===
@@ -139,12 +140,12 @@ void plot2dPoint(void)
 
 		// title
 		ev2d_drawString(x1, y2 + 0.4 * h, h, Title);
-		ev2d_drawString(x1, y2 + 1.8 * h, h, "E spectrum on points");
+		ev2d_drawString(x1, y2 + 1.8 * h, h, "spectrum on points");
 
 		// Y-axis
 		sprintf(str1, "%.0f", ymin);
 		sprintf(str2, "%.0f", ymax);
-		ev2dlib_Yaxis(y1, y2, x1, h, str1, str2, "[V/m]");
+		ev2dlib_Yaxis(y1, y2, x1, h, str1, str2, "|V|");
 
 		// X-axis
 		sprintf(str1, "%.3e", Freq1[0]);
@@ -154,18 +155,20 @@ void plot2dPoint(void)
 		// point #
 		sprintf(str1, "point #%d", ipoint + 1);
 		ev2d_drawString(x2 - 6.0 * h, y2 + 0.5 * h, h, str1);
-
+/*
 		// log
 		fprintf(fp, "point #%d (spectrum)\n", ipoint + 1);
 		fprintf(fp, "%s\n", " No. frequency[Hz]  amplitude   degree");
 		for (int ifreq = 0; ifreq < NFreq1; ifreq++) {
 			fprintf(fp, "%4d %13.5e %9.5f %9.3f\n", ifreq, Freq1[ifreq], d_abs(esp[ifreq]), d_deg(esp[ifreq]));
 		}
+*/
 	}
 
 	// free
 	free(esp);
-
+/*
 	// close
 	fclose(fp);
+*/
 }
