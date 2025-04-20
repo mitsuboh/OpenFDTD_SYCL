@@ -55,8 +55,8 @@ dftNear3d.o       \
 nearfield_c.o     \
 average.o         \
 outputChars.o     \
-outputZin.o       \
-outputSpara.o     \
+outputFeed.o      \
+outputPoint.o     \
 outputCoupling.o  \
 outputCross.o     \
 ingeometry.o      \

@@ -24,7 +24,7 @@ void efeed(int itime)
 		const double dz = Feed[ifeed].dz;
 
 		// V
-		const double v0 = vfeed(t, Tw, Feed[ifeed].delay);
+		const double v0 = vfeed(t, Tw, Feed[ifeed].delay, WFeed);
 		double v = v0 * Feed[ifeed].volt;
 
 		// E, V, I

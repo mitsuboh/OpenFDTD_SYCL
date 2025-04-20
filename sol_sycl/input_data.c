@@ -64,6 +64,7 @@ int input_data(FILE *fp)
 
 	NFeed = 0;
 	rFeed = 0;
+	WFeed = 0;
 
 	IPlanewave = 0;
 
@@ -368,6 +369,9 @@ int input_data(FILE *fp)
 		}
 		else if (!strcmp(strkey, "rfeed")) {
 			rFeed = atof(token[2]);
+		}
+		else if (!strcmp(strkey, "waveform")) {
+			WFeed = atoi(token[2]);
 		}
 		else if (!strcmp(strkey, "abc")) {
 			if      ((ntoken >= 3) && !strncmp(token[2], "0", 1)) {

@@ -25,8 +25,8 @@ extern "C" {
 
 #define PROGRAM "OpenFDTD"
 #define VERSION_MAJOR (4)
-#define VERSION_MINOR (2)
-#define VERSION_BUILD (3)
+#define VERSION_MINOR (3)
+#define VERSION_BUILD (0)
 
 #ifdef MAIN
 #define EXTERN
@@ -46,8 +46,8 @@ extern "C" {
 #define FN_far2d    "far2d.log"
 #define FN_near1d   "near1d.log"
 #define FN_near2d   "near2d.log"
-#define FN_feed     "feed.log"
-#define FN_point    "point.log"
+//#define FN_feed     "feed.log"
+//#define FN_point    "point.log"
 
 #define PI     (4.0*atan(1.0))
 #define C      (2.99792458e8)
@@ -246,6 +246,7 @@ EXTERN geometry_t   *Geometry;               // geometry
 EXTERN int          NFeed;                   // number of feeds
 EXTERN feed_t       *Feed;                   // feed
 EXTERN double       rFeed;                   // internal resistor
+EXTERN int          WFeed;                   // waveform, 0:derivative, 1:gauss
  
 EXTERN int          IPlanewave;              // 0/1 : plane wave ?
 EXTERN planewave_t  Planewave;               // plane wave

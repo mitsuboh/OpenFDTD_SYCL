@@ -1,7 +1,7 @@
 /*
 outputChars.c
 
-calculate and output to oth.log
+calculate and output to ofd.log
 */
 
 #include "ofd.h"
@@ -9,32 +9,46 @@ calculate and output to oth.log
 #include "ofd_prototype.h"
 
 
-void outputChars(FILE *fp)
+void outputChars(int ilog, FILE *fp, const char fn_feed[], const char fn_point[])
 {
-	// setup far field
+	// (0) setup far field
 	alloc_farfield();
 	setup_farfield();
 
-	// input imepedanece
+	// (1) feed data
 	if (NFeed && NFreq1) {
 		calcZin();
-		outputZin(fp);
+		if (ilog) {
+			outputZin(stdout);
+			outputZin(fp);
+		}
+		outputFeed(fn_feed);
 		calcPin();  // for post
 	}
 
-	// S-parameters
+	// (2) point data
 	if (NPoint && NFreq1) {
 		calcSpara();
-		outputSpara(fp);
+		if (ilog) {
+			outputSpara(stdout);
+			outputSpara(fp);
+		}
+		outputPoint(fn_point);
 	}
 
-	// coupling
+	// (3) coupling
 	if (NFeed && NPoint && NFreq1) {
-		outputCoupling(fp);
+		if (ilog) {
+			outputCoupling(stdout);
+			outputCoupling(fp);
+		}
 	}
 
-	// cross section
+	// (4) cross section
 	if (IPlanewave && NFreq2) {
-		outputCross(fp);
+		if (ilog) {
+			outputCross(stdout);
+			outputCross(fp);
+		}
 	}
 }

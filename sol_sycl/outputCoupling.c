@@ -1,7 +1,7 @@
 /*
 outputCoupling.c
 
-coupling
+output coupling
 */
 
 #include "ofd.h"
@@ -9,6 +9,7 @@ coupling
 #include "ofd_prototype.h"
 
 
+// coupling (sol + post)
 d_complex_t coupling(int ifeed, int ipoint, int ifreq)
 {
 	const d_complex_t cvf = calcdft(Ntime, &VFeed[ifeed   * (Solver.maxiter + 1)], Freq1[ifreq], Dt, 0);
@@ -18,7 +19,7 @@ d_complex_t coupling(int ifeed, int ipoint, int ifreq)
 }
 
 
-static void _outputCoupling(FILE *fp)
+void outputCoupling(FILE *fp)
 {
 	char str[BUFSIZ];
 
@@ -48,9 +49,10 @@ static void _outputCoupling(FILE *fp)
 	fflush(fp);
 }
 
-
+/*
 void outputCoupling(FILE *fp)
 {
 	_outputCoupling(stdout);
 	_outputCoupling(fp);
 }
+*/

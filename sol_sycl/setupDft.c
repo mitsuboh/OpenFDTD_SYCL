@@ -22,7 +22,7 @@ void setupDft(void)
 			double t = itime * Dt;
 			double fi = 0;
 			if (NFeed) {
-				fi = vfeed(t, Tw, 0);
+				fi = vfeed(t, Tw, 0, WFeed);
 			}
 			else if (IPlanewave) {
 				const double x0 = (Xn[0] + Xn[Nx]) / 2;

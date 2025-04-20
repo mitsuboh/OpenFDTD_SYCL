@@ -81,4 +81,6 @@ void writeout(FILE *fp)
 	}
 
 	fwrite(&num, sizeof(size_t), 1, fp);
+
+	fflush(fp);
 }

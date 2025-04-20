@@ -1,5 +1,5 @@
 /*
-OpenFDTD Version 4.2.3 (CPU + OpenMP)
+OpenFDTD Version 4.3.0 (CPU + OpenMP)
 
 solver
 */
@@ -10,7 +10,7 @@ solver
 
 #include "ofd_prototype.h"
 
-static void args(int, char *[], int *, int *, char [], char []);
+static void args(int, char *[], int *, int *, int *, char [], char [], char [], char []);
 static void error_check(int, int);
 
 int main(int argc, char *argv[])
@@ -29,10 +29,13 @@ int main(int argc, char *argv[])
 	// arguments
 	VECTOR = 0;
 	int nthread = 1;
+	int ilog = 1;
 	int prompt = 0;
 	char fn_in[BUFSIZ] = "";
 	char fn_out[BUFSIZ] = "ofd.out";
-	args(argc, argv, &nthread, &prompt, fn_in, fn_out);
+	char fn_feed[BUFSIZ] = "feed.log";
+	char fn_point[BUFSIZ] = "point.log";
+	args(argc, argv, &nthread, &ilog, &prompt, fn_in, fn_out, fn_feed, fn_point);
 	//printf("%d %d %s %s\n", nthread, prompt, fn_in, fn_out);
 
 	// set number of threads
@@ -57,7 +60,7 @@ int main(int argc, char *argv[])
 	error_check(ierr, prompt);
 
 	// open log file
-	if (io) {
+	if (ilog) {
 		if ((fp_log = fopen(FN_log, "w")) == NULL) {
 			printf(errfmt, FN_log);
 			ierr = 1;
@@ -66,7 +69,7 @@ int main(int argc, char *argv[])
 	error_check(ierr, prompt);
 
 	// monitor
-	if (io) {
+	if (ilog) {
 		// logo
 		sprintf(str, "<<< %s %s Ver.%d.%d.%d >>>", PROGRAM, prog, VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD);
 		monitor1(fp_log, str);
@@ -91,7 +94,7 @@ int main(int argc, char *argv[])
 	setup();
 
 	// monitor
-	if (io) {
+	if (ilog) {
 		monitor2(fp_log, 0, 1);
 	}
 
@@ -100,7 +103,7 @@ int main(int argc, char *argv[])
 	double tdft = 0;
 
 	// solve
-	solve(io, &tdft, fp_log);
+	solve(ilog, &tdft, fp_log);
 
 	// cpu time
 	cpu[3] = cputime();
@@ -109,10 +112,12 @@ int main(int argc, char *argv[])
 	// output
 	if (io) {
 		// calculation and output
-		outputChars(fp_log);
+		outputChars(ilog, fp_log, fn_feed, fn_point);
 
 		// output filenames
-		monitor3(fp_log, FN_log, fn_out);
+		if (ilog) {
+			monitor3(fp_log, FN_log, fn_out, fn_feed, fn_point);
+		}
 
 		// write ofd.out
 		if ((fp_out = fopen(fn_out, "wb")) == NULL) {
@@ -133,7 +138,7 @@ int main(int argc, char *argv[])
 	// cpu time
 	cpu[4] = cputime();
 
-	if (io) {
+	if (ilog) {
 		// cpu time
 		monitor4(fp_log, cpu);
 
@@ -151,9 +156,9 @@ int main(int argc, char *argv[])
 
 
 static void args(int argc, char *argv[],
-	int *nthread, int *prompt, char fn_in[], char fn_out[])
+	int *nthread, int *ilog, int *prompt, char fn_in[], char fn_out[], char fn_feed[], char fn_point[])
 {
-	const char usage[] = "Usage : ofd [-n <thread>] [-no-vector|-vector] [-out <outfile>] <datafile>";
+	const char usage[] = "Usage : ofd [-n <thread>] [-no-vector|-vector] <datafile>";
 
 	if (argc < 2) {
 		printf("%s\n", usage);
@@ -177,12 +182,23 @@ static void args(int argc, char *argv[],
 		else if (!strcmp(*argv, "-vector")) {
 			VECTOR = 1;
 		}
+		else if (!strcmp(*argv, "-no-log")) {
+			*ilog = 0;
+		}
 		else if (!strcmp(*argv, "-prompt")) {
 			*prompt = 1;
 		}
 		else if (!strcmp(*argv, "-out")) {
 			argc--;
 			strcpy(fn_out, *++argv);
+		}
+		else if (!strcmp(*argv, "-feed_log")) {
+			argc--;
+			strcpy(fn_feed, *++argv);
+		}
+		else if (!strcmp(*argv, "-point_log")) {
+			argc--;
+			strcpy(fn_point, *++argv);
 		}
 		else if (!strcmp(*argv, "--help")) {
 			printf("%s\n", usage);
