@@ -51,10 +51,17 @@ static void monitor2_(FILE *fp, int gpu, int commsize)
 
 
 // output files
-static void monitor3_(FILE *fp, const char fn_log[], const char fn_out[])
+static void monitor3_(FILE *fp, const char fn_log[], const char fn_out[], const char fn_feed[], const char fn_point[])
 {
 	fprintf(fp, "=== output files ===\n");
-	fprintf(fp, "%s, %s\n", fn_log, fn_out);
+	fprintf(fp, "%s, %s", fn_log, fn_out);
+	if (NFeed && NFreq1) {
+		fprintf(fp, ", %s", fn_feed);
+	}
+	if (NPoint && NFreq1) {
+		fprintf(fp, ", %s", fn_point);
+	}
+	fprintf(fp, "\n");
 	fflush(fp);
 }
 
@@ -93,10 +100,10 @@ void monitor2(FILE *fp, int gpu, int commsize)
 }
 
 
-void monitor3(FILE *fp, const char fn_log[], const char fn_out[])
+void monitor3(FILE *fp, const char fn_log[], const char fn_out[], const char fn_feed[], const char fn_point[])
 {
-	monitor3_(fp,     fn_log, fn_out);
-	monitor3_(stdout, fn_log, fn_out);
+	monitor3_(fp,     fn_log, fn_out, fn_feed, fn_point);
+	monitor3_(stdout, fn_log, fn_out, fn_feed, fn_point);
 }
 
 

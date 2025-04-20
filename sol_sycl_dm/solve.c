@@ -11,7 +11,7 @@ solve.c
 #endif
 extern void		setup_xpl(void);
 
-void solve(int io, double *tdft, FILE *fp)
+void solve(int ilog, double *tdft, FILE *fp)
 {
 	double fmax[] = {0, 0};
 	char   str[BUFSIZ];
@@ -121,7 +121,7 @@ void solve(int io, double *tdft, FILE *fp)
 			Niter++;
 
 			// monitor
-			if (io) {
+			if (ilog) {
 				sprintf(str, "%7d %.6f %.6f", itime, fsum[0], fsum[1]);
 				fprintf(fp,     "%s\n", str);
 				fprintf(stdout, "%s\n", str);
@@ -141,7 +141,7 @@ void solve(int io, double *tdft, FILE *fp)
 	}
 
 	// result
-	if (io) {
+	if (ilog) {
 		sprintf(str, "    --- %s ---", (converged ? "converged" : "max steps"));
 		fprintf(fp,     "%s\n", str);
 		fprintf(stdout, "%s\n", str);

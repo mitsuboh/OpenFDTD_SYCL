@@ -34,7 +34,7 @@ void efeed(int itime)
 		const double dz = Feed[ifeed].dz;
 
 		// V
-		const double v0 = vfeed(t, Tw, Feed[ifeed].delay);
+		const double v0 = vfeed(t, Tw, Feed[ifeed].delay, WFeed);
 		double v = v0 * Feed[ifeed].volt;
 
 		// E, V, I
@@ -83,7 +83,7 @@ void efeed(int itime)
 	}
 
 #else	// _ONEAPI
-SYCL_EXTERNAL double vfeed(double,double,double);
+SYCL_EXTERNAL double vfeed(double,double,double,int);
 
 	const int Block = 128;
 	sycl::range<1> updateBlock = sycl::range<1>(Block);
@@ -114,6 +114,7 @@ SYCL_EXTERNAL double vfeed(double,double,double);
 		auto Feed = ::d_Feed;
 		auto VFeed = ::d_VFeed;
 		auto IFeed = ::d_IFeed;
+		auto WFeed = ::WFeed;
 		int maxiter_l = Solver.maxiter;
 		auto rFeed = ::rFeed;
 		auto Tw = ::Tw;
@@ -130,7 +131,7 @@ SYCL_EXTERNAL double vfeed(double,double,double);
 					double dz = Feed[ifeed].dz;
 
 					// V
-					double v0 = vfeed(t, Tw, Feed[ifeed].delay);
+					double v0 = vfeed(t, Tw, Feed[ifeed].delay, WFeed);
 					double v = v0 * Feed[ifeed].volt;
 
 					// E, V, I
