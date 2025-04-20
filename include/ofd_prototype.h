@@ -41,19 +41,21 @@ extern void        memfree2(void);
 extern void        memfree3(void);
 extern void        monitor1(FILE *, const char []);
 extern void        monitor2(FILE *, int, int);
-extern void        monitor3(FILE *, const char [], const char []);
+extern void        monitor3(FILE *, const char [], const char [], const char [], const char []);
 extern void        monitor4(FILE *, const double []);
 extern int         nearest(double, int, int, const double *);
 extern void        NodeE_c(int, int, int, int, d_complex_t *, d_complex_t *, d_complex_t *);
 extern void        NodeH_c(int, int, int, int, d_complex_t *, d_complex_t *, d_complex_t *);
-extern void        outputChars(FILE *);
+extern void        outputChars(int, FILE *, const char [], const char []);
 extern void        outputCoupling(FILE *);
 extern void        outputCross(FILE *);
 extern void        outputFar0d(void);
 extern void        outputFar1d(void);
 extern void        outputFar2d(void);
+extern void        outputFeed(const char []);
 extern void        outputNear1d(void);
 extern void        outputNear2d(void);
+extern void        outputPoint(const char []);
 extern void        outputSpara(FILE *);
 extern void        outputZin(FILE *);
 extern void        planewave(double, double, double, double, d_complex_t [], d_complex_t []);
@@ -107,7 +109,7 @@ extern void        setup_node(int, int, int, double *, double *, double *, int *
 extern void        setup_planewave(void);
 extern void        setup_point(const double *, const double *, const double *, const char []);
 extern int         tokenize(char *, const char *, char *[], int);
-extern double      vfeed(double, double, double);
+extern double      vfeed(double, double, double, int);
 extern void        writeout(FILE *);
 
 // MPI

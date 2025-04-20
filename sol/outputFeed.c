@@ -1,7 +1,7 @@
 /*
-outputZin.c
+outputFeed.c
 
-input impedance
+output feed data
 */
 
 #include "ofd.h"
@@ -67,7 +67,7 @@ void calcPin(void)
 }
 
 
-static void _outputZin(FILE *fp)
+void outputZin(FILE *fp)
 {
 	fprintf(fp, "=== input impedance ===\n");
 
@@ -88,8 +88,48 @@ static void _outputZin(FILE *fp)
 }
 
 
-void outputZin(FILE *fp)
+void outputFeed(const char fn_feed[])
 {
-	_outputZin(stdout);
-	_outputZin(fp);
+	FILE *fp;
+	if ((fp = fopen(fn_feed, "w")) == NULL) {
+		fprintf(stderr, "*** %s open error.\n", fn_feed);
+		return;
+	}
+
+	for (int ifeed = 0; ifeed < NFeed; ifeed++) {
+		fprintf(fp, "feed #%d (waveform)\n", ifeed + 1);
+		fprintf(fp, "%s\n", "    No.    time[sec]      V[V]          I[A]");
+		for (int itime = 0; itime < Ntime; itime++) {
+			const int id = ifeed * (Solver.maxiter + 1) + itime;
+			fprintf(fp, "%7d %13.5e %13.5e %13.5e\n", itime, itime * Dt, VFeed[id], IFeed[id]);
+		}
+	}
+
+	for (int ifeed = 0; ifeed < NFeed; ifeed++) {
+		fprintf(fp, "feed #%d (spectrum)\n", ifeed + 1);
+		fprintf(fp, "%s\n", " No. frequency[Hz]       V          I");
+		for (int ifreq = 0; ifreq < NFreq1; ifreq++) {
+			// DFT
+			const d_complex_t vsum = calcdft(Ntime, &VFeed[ifeed * (Solver.maxiter + 1)], Freq1[ifreq], Dt, 0);
+			const d_complex_t isum = calcdft(Ntime, &IFeed[ifeed * (Solver.maxiter + 1)], Freq1[ifreq], Dt, 0);
+			fprintf(fp, "%4d %13.5e %10.5f %10.5f\n", ifreq, Freq1[ifreq], d_abs(vsum), d_abs(isum));
+		}
+	}
+
+	fflush(fp);
+	fclose(fp);
 }
+
+/*
+void outputFeed(int ilog, FILE *fp, const char fn_feed[])
+{
+	// ofd.log and stdout
+	if (ilog) {
+		_outputZin(stdout);
+		_outputZin(fp);
+	}
+
+	// feed.log
+	_outputFeed(fn_feed);
+}
+*/
