@@ -120,6 +120,50 @@ void setup_xpl(void)
 		myQ.memcpy(d_fMurHy, fMurHy, ysize).wait();
 		myQ.memcpy(d_fMurHz, fMurHz, zsize).wait();
 	}
+        else if (iABC == 1) {
+                xsize = numPmlEx * sizeof(pml_t);
+                ysize = numPmlEy * sizeof(pml_t);
+                zsize = numPmlEz * sizeof(pml_t);
+		d_fPmlEx = (pml_t*)malloc_dev(xsize);
+		d_fPmlEy = (pml_t*)malloc_dev(ysize);
+		d_fPmlEz = (pml_t*)malloc_dev(zsize);
+		myQ.memcpy(d_fPmlEx, fPmlEx, xsize).wait();
+		myQ.memcpy(d_fPmlEy, fPmlEy, ysize).wait();
+		myQ.memcpy(d_fPmlEz, fPmlEz, zsize).wait();
 
+                xsize = numPmlHx * sizeof(pml_t);
+                ysize = numPmlHy * sizeof(pml_t);
+                zsize = numPmlHz * sizeof(pml_t);
+		d_fPmlHx = (pml_t*)malloc_dev(xsize);
+		d_fPmlHy = (pml_t*)malloc_dev(ysize);
+		d_fPmlHz = (pml_t*)malloc_dev(zsize);
+		myQ.memcpy(d_fPmlHx, fPmlHx, xsize).wait();
+		myQ.memcpy(d_fPmlHy, fPmlHy, ysize).wait();
+		myQ.memcpy(d_fPmlHz, fPmlHz, zsize).wait();
+
+                xsize = (Nx + (2 * cPML.l)) * sizeof(real_t);
+                ysize = (Ny + (2 * cPML.l)) * sizeof(real_t);
+                zsize = (Nz + (2 * cPML.l)) * sizeof(real_t);
+		d_gPmlXn = (real_t*)malloc_dev(xsize);
+		d_gPmlXc = (real_t*)malloc_dev(xsize);
+		d_gPmlYn = (real_t*)malloc_dev(ysize);
+		d_gPmlYc = (real_t*)malloc_dev(ysize);
+		d_gPmlZn = (real_t*)malloc_dev(zsize);
+		d_gPmlZc = (real_t*)malloc_dev(zsize);
+		myQ.memcpy(d_gPmlXn, gPmlXn, xsize).wait();
+		myQ.memcpy(d_gPmlXc, gPmlXc, xsize).wait();
+		myQ.memcpy(d_gPmlYn, gPmlYn, ysize).wait();
+		myQ.memcpy(d_gPmlYc, gPmlYc, ysize).wait();
+		myQ.memcpy(d_gPmlZn, gPmlZn, zsize).wait();
+		myQ.memcpy(d_gPmlZc, gPmlZc, zsize).wait();
+
+                size = NMaterial * sizeof(real_t);
+		d_rPmlE = (real_t*)malloc_dev(size);
+		d_rPmlH = (real_t*)malloc_dev(size);
+		d_rPml = (real_t*)malloc_dev(size);
+		myQ.memcpy(d_rPmlE, rPmlE, size).wait();
+		myQ.memcpy(d_rPmlH, rPmlH, size).wait();
+		myQ.memcpy(d_rPml, rPml, size).wait();
+        }
 }
 #endif

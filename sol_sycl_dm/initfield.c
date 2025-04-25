@@ -46,22 +46,39 @@ void initfield(void)
 		xsize = numPmlEx * sizeof(real_t);
 		ysize = numPmlEy * sizeof(real_t);
 		zsize = numPmlEz * sizeof(real_t);
+#ifdef _ONEAPI
+		myQ.memset(Exy, 0, xsize);
+		myQ.memset(Exz, 0, xsize);
+		myQ.memset(Eyz, 0, ysize);
+		myQ.memset(Eyx, 0, ysize);
+		myQ.memset(Ezx, 0, zsize);
+		myQ.memset(Ezy, 0, zsize);
+#else
 		memset(Exy, 0, xsize);
 		memset(Exz, 0, xsize);
 		memset(Eyz, 0, ysize);
 		memset(Eyx, 0, ysize);
 		memset(Ezx, 0, zsize);
 		memset(Ezy, 0, zsize);
-
+#endif
 		xsize = numPmlHx * sizeof(real_t);
 		ysize = numPmlHy * sizeof(real_t);
 		zsize = numPmlHz * sizeof(real_t);
+#ifdef _ONEAPI
+		myQ.memset(Hxy, 0, xsize);
+		myQ.memset(Hxz, 0, xsize);
+		myQ.memset(Hyz, 0, ysize);
+		myQ.memset(Hyx, 0, ysize);
+		myQ.memset(Hzx, 0, zsize);
+		myQ.memset(Hzy, 0, zsize);
+#else
 		memset(Hxy, 0, xsize);
 		memset(Hxz, 0, xsize);
 		memset(Hyz, 0, ysize);
 		memset(Hyx, 0, ysize);
 		memset(Hzx, 0, zsize);
 		memset(Hzy, 0, zsize);
+#endif
 	}
 
 	memset(Eiter, 0, Iter_size);
