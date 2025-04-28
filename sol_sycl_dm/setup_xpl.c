@@ -107,6 +107,36 @@ void setup_xpl(void)
 	myQ.memcpy(d_D1, D1, size).wait();
 	myQ.memcpy(d_D2, D2, size).wait();
 
+	// disperson
+	//printf("%zd %zd %zd\n", numDispersionEx, numDispersionEy, numDispersionEz);
+	if (numDispersionEx > 0) {
+		size = numDispersionEx * sizeof(dispersion_t);
+		d_mDispersionEx = (dispersion_t*)malloc_dev(size);
+		myQ.memcpy(d_mDispersionEx, mDispersionEx, size).wait();
+
+		size = numDispersionEx * sizeof(real_t);
+		d_DispersionEx = (real_t*)malloc_dev(size);
+		myQ.memcpy(d_DispersionEx, DispersionEx, size).wait();
+	}
+	if (numDispersionEy > 0) {
+		size = numDispersionEy * sizeof(dispersion_t);
+		d_mDispersionEy = (dispersion_t*)malloc_dev(size);
+		myQ.memcpy(d_mDispersionEy, mDispersionEy, size).wait();
+
+		size = numDispersionEy * sizeof(real_t);
+		d_DispersionEy = (real_t*)malloc_dev(size);
+		myQ.memcpy(d_DispersionEy, DispersionEy, size).wait();
+	}
+	if (numDispersionEz > 0) {
+		size = numDispersionEz * sizeof(dispersion_t);
+		d_mDispersionEz = (dispersion_t*)malloc_dev(size);
+		myQ.memcpy(d_mDispersionEz, mDispersionEz, size).wait();
+
+		size = numDispersionEz * sizeof(real_t);
+		d_DispersionEz = (real_t*)malloc_dev(size);
+		myQ.memcpy(d_DispersionEz, DispersionEz, size).wait();
+	}
+
 		// ABC
 
 	if (iABC == 0) {

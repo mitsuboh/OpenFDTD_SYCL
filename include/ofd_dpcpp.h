@@ -47,6 +47,8 @@ EXTERN id_t *d_iEx, *d_iEy, *d_iEz;        // material ID of E
 EXTERN id_t *d_iHx, *d_iHy, *d_iHz;        // material ID of H
 EXTERN real_t* d_C1, * d_C2;
 EXTERN real_t* d_D1, * d_D2;
+EXTERN real_t       *d_DispersionEx, *d_DispersionEy, *d_DispersionEz;
+EXTERN dispersion_t *d_mDispersionEx, *d_mDispersionEy, *d_mDispersionEz;
 EXTERN mur_t* d_fMurHx, * d_fMurHy, * d_fMurHz;
 EXTERN pml_t        *d_fPmlEx, *d_fPmlEy, *d_fPmlEz;
 EXTERN pml_t        *d_fPmlHx, *d_fPmlHy, *d_fPmlHz;
