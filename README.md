@@ -1,5 +1,5 @@
 2025- 5- 1
- CudaでoffloadされているcodesをすべてSYCLで書き換えました。
+ CudaでoffloadされているcodesをすべてSYCLで書き換えました。  
 2025- 4-28
  OpenFDTDのVersion 4.3.0 (2025/03/29)をベースにアップデートしました。
 
@@ -16,7 +16,7 @@ ofd_sycl -txp 1 data/sample/1st_sample.ofd
 ===== 
 
 2025- 5- 1
- All codes written by cuda are converted to SYCL.
+ All codes written by cuda are converted to SYCL.  
 2025- 4-28
  This is updated to be based on Version 4.3.0 (2025/03/29)
 
