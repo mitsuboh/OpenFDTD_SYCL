@@ -89,13 +89,18 @@ void initfield(void)
 #ifdef _ONEAPI
 		myQ.memset(d_VFeed, 0, Feed_size);
 		myQ.memset(d_IFeed, 0, Feed_size);
-#endif
+#else
 		memset(VFeed, 0, Feed_size);
 		memset(IFeed, 0, Feed_size);
+#endif
 	}
 
 	if (NPoint > 0) {
+#ifdef _ONEAPI
+		myQ.memset(d_VPoint, 0, Point_size);
+#else
 		memset(VPoint, 0, Point_size);
+#endif
 	}
 
 	if ((NN > 0) && (NFreq2 > 0)) {

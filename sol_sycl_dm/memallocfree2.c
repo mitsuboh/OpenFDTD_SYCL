@@ -78,13 +78,23 @@ void memalloc2(void)
         // feed
 #ifdef _ONEAPI
 	if (NFeed > 0) {
-	size = NFeed * sizeof(feed_t);
-	d_Feed = (feed_t*)malloc_dev(size);
-	myQ.memcpy(d_Feed, Feed, size).wait();
+		size = NFeed * sizeof(feed_t);
+		d_Feed = (feed_t*)malloc_dev(size);
+		myQ.memcpy(d_Feed, Feed, size).wait();
 
-	d_VFeed = (double*)malloc_dev(Feed_size);
-	d_IFeed = (double*)malloc_dev(Feed_size);
+		d_VFeed = (double*)malloc_dev(Feed_size);
+		d_IFeed = (double*)malloc_dev(Feed_size);
         }
+
+	// point
+	if (NPoint > 0) {
+		size = (NPoint + 2) * sizeof(point_t);
+		d_Point = (point_t *)malloc_dev(size);
+		myQ.memcpy(d_Point, Point, size).wait();
+
+		d_VPoint = (double *)malloc_dev(Point_size);
+	}
+
 #endif
 }
 
@@ -165,6 +175,10 @@ void memfree2(void)
                 free_dev(d_Feed);
                 free_dev(d_VFeed);
                 free_dev(d_IFeed);
+        }
+        if (NPoint > 0) {
+                free_dev(d_Point);
+                free_dev(d_VPoint);
         }
 #endif
 }

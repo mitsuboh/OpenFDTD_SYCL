@@ -159,6 +159,10 @@ void solve(int ilog, double *tdft, FILE *fp)
                 myQ.memcpy(IFeed, d_IFeed, Feed_size).wait();
         }
 
+        if (NPoint > 0) {
+                myQ.memcpy(VPoint, d_VPoint, Point_size).wait();
+        }
+
 	if (NN && NFreq2) {
 		size_t size = NN * NFreq2 * sizeof(real_t);
 		myQ.memcpy(cEx_r, d_cEx_r, size).wait();
