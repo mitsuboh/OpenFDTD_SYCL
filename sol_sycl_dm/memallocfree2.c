@@ -86,6 +86,13 @@ void memalloc2(void)
 		d_IFeed = (double*)malloc_dev(Feed_size);
         }
 
+	// inductor
+	if (NInductor > 0) {
+		size = NInductor * sizeof(inductor_t);
+		d_Inductor = (inductor_t *)malloc_dev(size);
+		myQ.memcpy(d_Inductor, Inductor, size).wait();
+	}
+
 	// point
 	if (NPoint > 0) {
 		size = (NPoint + 2) * sizeof(point_t);
@@ -176,6 +183,9 @@ void memfree2(void)
                 free_dev(d_VFeed);
                 free_dev(d_IFeed);
         }
+	if (NInductor > 0) {
+                free_dev(d_Inductor);
+	}
         if (NPoint > 0) {
                 free_dev(d_Point);
                 free_dev(d_VPoint);

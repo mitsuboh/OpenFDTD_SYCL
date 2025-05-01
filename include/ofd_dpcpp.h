@@ -57,6 +57,7 @@ EXTERN real_t       *d_gPmlXc, *d_gPmlYc, *d_gPmlZc;
 EXTERN real_t       *d_rPmlE, *d_rPmlH, *d_rPml;
 EXTERN feed_t * d_Feed;
 EXTERN double * d_VFeed, * d_IFeed;
+EXTERN inductor_t      *d_Inductor;
 EXTERN point_t      *d_Point;
 EXTERN double       *d_VPoint;
 EXTERN real_t       *d_cEx_r, *d_cEx_i, *d_cEy_r, *d_cEy_i, *d_cEz_r, *d_cEz_i;
