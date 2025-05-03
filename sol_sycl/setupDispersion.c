@@ -6,6 +6,11 @@ setup dispersion data
 
 #include "ofd.h"
 
+#ifdef _ONEAPI
+#undef C	// C is used for (2.99792458e8) but <CL/sycl.hpp> refuses it
+#include "ofd_dpcpp.h"
+#endif
+
 static void setupDispersion_id(int);
 
 
@@ -36,19 +41,37 @@ void setupDispersion(void)
 	//printf("%zd %zd %zd\n", numDispersionEx, numDispersionEy, numDispersionEz);
 
 	if (numDispersionEx > 0) {
+#ifndef _ONEAPI
 		mDispersionEx = (dispersion_t *)malloc(numDispersionEx * sizeof(dispersion_t));
 		DispersionEx =        (real_t *)malloc(numDispersionEx * sizeof(real_t));
 		memset(DispersionEx, 0,                numDispersionEx * sizeof(real_t));
+#else
+		mDispersionEx = (dispersion_t *)malloc_shm(numDispersionEx * sizeof(dispersion_t));
+		DispersionEx =        (real_t *)malloc_shm(numDispersionEx * sizeof(real_t));
+		memset(DispersionEx, 0,                numDispersionEx * sizeof(real_t));
+#endif // _ONEAPI
 	}
 	if (numDispersionEy > 0) {
+#ifndef _ONEAPI
 		mDispersionEy = (dispersion_t *)malloc(numDispersionEy * sizeof(dispersion_t));
 		DispersionEy =        (real_t *)malloc(numDispersionEy * sizeof(real_t));
 		memset(DispersionEy, 0,                numDispersionEy * sizeof(real_t));
+#else
+		mDispersionEy = (dispersion_t *)malloc_shm(numDispersionEy * sizeof(dispersion_t));
+		DispersionEy =        (real_t *)malloc_shm(numDispersionEy * sizeof(real_t));
+		memset(DispersionEy, 0,                numDispersionEy * sizeof(real_t));
+#endif // _ONEAPI
 	}
 	if (numDispersionEz > 0) {
+#ifndef _ONEAPI
 		mDispersionEz = (dispersion_t *)malloc(numDispersionEz * sizeof(dispersion_t));
 		DispersionEz =        (real_t *)malloc(numDispersionEz * sizeof(real_t));
 		memset(DispersionEz, 0,                numDispersionEz * sizeof(real_t));
+#else
+		mDispersionEz = (dispersion_t *)malloc_shm(numDispersionEz * sizeof(dispersion_t));
+		DispersionEz =        (real_t *)malloc_shm(numDispersionEz * sizeof(real_t));
+		memset(DispersionEz, 0,                numDispersionEz * sizeof(real_t));
+#endif // _ONEAPI
 	}
 
 	setupDispersion_id(1);
