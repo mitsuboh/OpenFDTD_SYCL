@@ -75,7 +75,7 @@ void vpoint(int itime)
 		auto Point = ::Point;
 		auto VPoint = ::VPoint;
 		auto IPlanewave = ::IPlanewave;
-		auto SPlanewave = ::d_SPlanewave;
+		auto SPlanewave = ::SPlanewave;
 		auto iMin = ::iMin;
 		auto iMax = ::iMax;
 		auto jMin = ::jMin;
