@@ -52,7 +52,7 @@ void pmlHy(void)
 		auto Ez = ::Ez;
 		auto Ex = ::Ex;
 		auto RZc = :: RZc;
-		auto RXc = :: RXn;
+		auto RXc = :: RXc;
 		auto rPmlH = ::rPmlH;
 		auto rPml = ::rPml;
 		auto gPmlXc = ::gPmlXc;

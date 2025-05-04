@@ -52,7 +52,7 @@ void pmlHz(void)
 		auto Ey = ::Ey;
 		auto Ex = ::Ex;
 		auto RYc = :: RYc;
-		auto RXc = :: RXn;
+		auto RXc = :: RXc;
 		auto rPmlH = ::rPmlH;
 		auto rPml = ::rPml;
 		auto gPmlXc = ::gPmlXc;
