@@ -194,7 +194,11 @@ void memalloc1(void)
 	// point
 	if (NPoint > 0) {
 		Point_size = (NPoint + 2) * (Solver.maxiter + 1) * sizeof(double);
+#ifdef _ONEAPI
+		VPoint = (double *)malloc_shm(Point_size);
+#else
 		VPoint = (double *)malloc(Point_size);
+#endif
 	}
 	if ((NPoint > 0) && (NFreq1 > 0)) {
 		Spara_size = NPoint * NFreq1 * sizeof(d_complex_t);
@@ -346,7 +350,11 @@ void memfree1(void)
 
 	if (NPoint > 0) {
 		free(Point);
+#ifdef _ONEAPI
+		free_shm(VPoint);
+#else
 		free(VPoint);
+#endif
 	}
 	if ((NPoint > 0) && (NFreq1 > 0)) {
 		free(Spara);
