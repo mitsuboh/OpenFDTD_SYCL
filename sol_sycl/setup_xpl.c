@@ -8,7 +8,8 @@
 #ifdef _ONEAPI
 void setup_xpl(void)
 {
-
+	SPlanewave.theta = (real_t)Planewave.theta;
+	SPlanewave.phi = (real_t)Planewave.phi;
 	for (int m = 0; m < 3; m++) {
 		SPlanewave.ei[m] = (real_t)Planewave.ei[m];
 		SPlanewave.hi[m] = (real_t)Planewave.hi[m];
