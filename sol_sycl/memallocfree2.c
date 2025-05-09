@@ -72,6 +72,15 @@ void memalloc2(void)
 		Hzy = (real_t *)malloc(zsize);
 #endif
 	}
+
+        // point
+#ifdef _ONEAPI
+        if (NPoint > 0) {
+                size = (NPoint + 2) * sizeof(point_t);
+                d_Point = (point_t *)malloc_dev(size);
+                myQ.memcpy(d_Point, Point, size).wait();
+	}
+#endif
 }
 
 
@@ -138,4 +147,9 @@ void memfree2(void)
 		free(Hzy);
 #endif
 	}
+#ifdef _ONEAPI
+        if (NPoint > 0) {
+                free_dev(d_Point);
+	}
+#endif
 }

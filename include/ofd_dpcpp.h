@@ -49,6 +49,7 @@ EXTERN real_t* d_D1, * d_D2;
 EXTERN mur_t* d_fMurHx, * d_fMurHy, * d_fMurHz;
 EXTERN feed_t * d_Feed;
 EXTERN double * d_VFeed, * d_IFeed;
+EXTERN point_t * d_Point;
 EXTERN real_t       *d_cEx_r, *d_cEx_i, *d_cEy_r, *d_cEy_i, *d_cEz_r, *d_cEz_i;
 EXTERN real_t       *d_cHx_r, *d_cHx_i, *d_cHy_r, *d_cHy_i, *d_cHz_r, *d_cHz_i;
 
