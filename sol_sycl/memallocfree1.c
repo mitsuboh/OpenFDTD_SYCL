@@ -16,10 +16,6 @@ void memalloc1(void)
 {
 	size_t size, xsize, ysize, zsize;
 
-#ifdef _ONEAPI
-	SPlanewave = (splanewave_t*)malloc_shm(sizeof(splanewave_t));
-#endif
-
 	// mesh factor
 	xsize = (Nx + 1) * sizeof(real_t);
 	ysize = (Ny + 1) * sizeof(real_t);
@@ -232,7 +228,6 @@ void memalloc1(void)
 void memfree1(void)
 {
 #ifdef _ONEAPI
-	free_shm(SPlanewave);
 	free_shm(C1);
 	free_shm(C2);
 	free_shm(D1);

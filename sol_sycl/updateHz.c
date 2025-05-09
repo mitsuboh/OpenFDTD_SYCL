@@ -222,7 +222,7 @@ static void updateHz_p_no_vector(double t)
 					}
 					else {
 						real_t fi, dfi;
-						finc_s(s_Xc[i], s_Yc[j], s_Zn[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->hi[2], SPlanewave->ai, s_Dt, &fi, &dfi);
+						finc_s(s_Xc[i], s_Yc[j], s_Zn[k], s_t, SPlanewave.r0, SPlanewave.ri, SPlanewave.hi[2], SPlanewave.ai, s_Dt, &fi, &dfi);
 
 						if (m == PEC) {
 							Hz[n] = -fi;

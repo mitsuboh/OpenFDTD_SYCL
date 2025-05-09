@@ -28,7 +28,7 @@ sycl::queue myQ(myDevice);
 extern sycl::device myDevice;
 extern sycl::queue myQ;
 #endif
-EXTERN splanewave_t * SPlanewave, * d_SPlanewave;
+EXTERN splanewave_t  SPlanewave;
 EXTERN int CPU;
 
 // Host FP32 data

@@ -76,7 +76,7 @@ void dispersionEy(double t)
 					real_t fi = 0;
 					if (IPlanewave) {
 						real_t dfi;
-						finc_s(s_Xn[i], s_Yc[j], s_Zn[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[1], SPlanewave->ai, s_Dt, &fi, &dfi);
+						finc_s(s_Xn[i], s_Yc[j], s_Zn[k], s_t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[1], SPlanewave.ai, s_Dt, &fi, &dfi);
 					}
 
 					EY(i, j, k) += f1 * DispersionEy[n];

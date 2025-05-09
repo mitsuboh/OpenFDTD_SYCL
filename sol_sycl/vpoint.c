@@ -119,7 +119,7 @@ void vpoint(int itime)
 			d = Point[n].dx;
 			if (IPlanewave) {
 				const real_t t = (itime + 1) * Dt;
-				finc_s(s_Xc[i], s_Yn[j], s_Zn[k], t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[0], SPlanewave->ai, s_t, &fi, &dfi);
+				finc_s(s_Xc[i], s_Yn[j], s_Zn[k], t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[0], SPlanewave.ai, s_t, &fi, &dfi);
 				e += fi;
 			}
 		}
@@ -131,7 +131,7 @@ void vpoint(int itime)
 			d = Point[n].dy;
 			if (IPlanewave) {
 				const double t = (itime + 1) * Dt;
-				finc_s(s_Xn[i], s_Yc[j], s_Zn[k], t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[1], SPlanewave->ai, s_t, &fi, &dfi);
+				finc_s(s_Xn[i], s_Yc[j], s_Zn[k], t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[1], SPlanewave.ai, s_t, &fi, &dfi);
 				e += fi;
 			}
 		}
@@ -143,7 +143,7 @@ void vpoint(int itime)
 			d = Point[n].dz;
 			if (IPlanewave) {
 				const double t = (itime + 1) * Dt;
-				finc_s(s_Xn[i], s_Yn[j], s_Zc[k], t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[2], SPlanewave->ai, s_t, &fi, &dfi);
+				finc_s(s_Xn[i], s_Yn[j], s_Zc[k], t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[2], SPlanewave.ai, s_t, &fi, &dfi);
 				e += fi;
 			}
 		}

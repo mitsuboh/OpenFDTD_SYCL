@@ -222,7 +222,7 @@ static void updateHy_p_no_vector(double t)
 					}
 					else {
 						real_t fi, dfi;
-						finc_s(s_Xc[i], s_Yn[j], s_Zc[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->hi[1], SPlanewave->ai, s_Dt, &fi, &dfi);
+						finc_s(s_Xc[i], s_Yn[j], s_Zc[k], s_t, SPlanewave.r0, SPlanewave.ri, SPlanewave.hi[1], SPlanewave.ai, s_Dt, &fi, &dfi);
 
 						if (m == PEC) {
 							Hy[n] = -fi;

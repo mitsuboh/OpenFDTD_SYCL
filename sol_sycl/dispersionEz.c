@@ -76,7 +76,7 @@ void dispersionEz(double t)
 					real_t fi = 0;
 					if (IPlanewave) {
 						real_t dfi;
-						finc_s(s_Xn[i], s_Yn[j], s_Zc[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[2], SPlanewave->ai, s_Dt, &fi, &dfi);
+						finc_s(s_Xn[i], s_Yn[j], s_Zc[k], s_t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[2], SPlanewave.ai, s_Dt, &fi, &dfi);
 					}
 
 					EZ(i, j, k) += f1 * DispersionEz[n];

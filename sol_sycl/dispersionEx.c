@@ -76,7 +76,7 @@ void dispersionEx(double t)
 					real_t fi = 0;
 					if (IPlanewave) {
 						real_t dfi;
-						finc_s(s_Xc[i], s_Yn[j], s_Zn[k], s_t, SPlanewave->r0, SPlanewave->ri, SPlanewave->ei[0], SPlanewave->ai, s_Dt, &fi, &dfi);
+						finc_s(s_Xc[i], s_Yn[j], s_Zn[k], s_t, SPlanewave.r0, SPlanewave.ri, SPlanewave.ei[0], SPlanewave.ai, s_Dt, &fi, &dfi);
 					}
 
 					EX(i, j, k) += f1 * DispersionEx[n];

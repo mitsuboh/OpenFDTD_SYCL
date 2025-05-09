@@ -10,12 +10,12 @@ void setup_xpl(void)
 {
 
 	for (int m = 0; m < 3; m++) {
-		SPlanewave->ei[m] = (real_t)Planewave.ei[m];
-		SPlanewave->hi[m] = (real_t)Planewave.hi[m];
-		SPlanewave->r0[m] = (real_t)Planewave.r0[m];
-		SPlanewave->ri[m] = (real_t)Planewave.ri[m];
+		SPlanewave.ei[m] = (real_t)Planewave.ei[m];
+		SPlanewave.hi[m] = (real_t)Planewave.hi[m];
+		SPlanewave.r0[m] = (real_t)Planewave.r0[m];
+		SPlanewave.ri[m] = (real_t)Planewave.ri[m];
 	}
-	SPlanewave->ai = (real_t)Planewave.ai;
+	SPlanewave.ai = (real_t)Planewave.ai;
 
 	// mesh (real_t)
 
