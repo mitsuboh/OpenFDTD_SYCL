@@ -24,8 +24,8 @@ void memalloc2(void)
 	Hx = (real_t *)malloc_dev(size);
 	Hy = (real_t *)malloc_dev(size);
 	Hz = (real_t *)malloc_dev(size);
-        SPlanewave = (splanewave*)malloc(sizeof(splanewave));
-        d_SPlanewave = (splanewave*)malloc_dev(sizeof(splanewave));
+        d_SPlanewave = (splanewave_t*)malloc_dev(sizeof(splanewave_t));
+
 #else
 	Ex = (real_t *)malloc(size);
 	Ey = (real_t *)malloc(size);
@@ -127,9 +127,8 @@ void memfree2(void)
 	free_dev(d_cHx_i);
 	free_dev(d_cHy_i);
 	free_dev(d_cHz_i);
-
-	free(SPlanewave);
 	free_dev(d_SPlanewave);
+
 #else
 	free(Ex);
 	free(Ey);

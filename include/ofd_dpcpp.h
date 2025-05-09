@@ -19,17 +19,16 @@ typedef struct {
 	real_t ei[3], hi[3];      // E and H unit vector
 	real_t ri[3], r0[3], ai;  // incidence vector and factor
 	int    pol;               // polarization : 1=V, 2=H
-} splanewave;
+} splanewave_t;
 
 #ifdef MAIN
 sycl::device myDevice = sycl::device(sycl::cpu_selector_v);
 sycl::queue myQ(myDevice);
-splanewave* SPlanewave, * d_SPlanewave;
 #else
 extern sycl::device myDevice;
 extern sycl::queue myQ;
-extern splanewave* SPlanewave, * d_SPlanewave;
 #endif
+EXTERN splanewave_t SPlanewave, *d_SPlanewave;
 EXTERN int CPU;
 
 // Host FP32 data
