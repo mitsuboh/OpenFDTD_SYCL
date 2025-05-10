@@ -72,7 +72,7 @@ void vpoint(int itime)
 
 	myQ.submit([&](sycl::handler& hndl) {
 		auto NPoint = ::NPoint;
-		auto Point = ::d_Point;
+		auto Point = ::Point;
 		auto VPoint = ::VPoint;
 		auto IPlanewave = ::IPlanewave;
 		auto SPlanewave = ::SPlanewave;

@@ -329,7 +329,11 @@ int input_data(FILE *fp)
 				printf(errfmt3, strkey, NPoint + 1);
 				return 1;
 			}
+#ifdef _ONEAPI
+			Point  = (point_t *)realloc_shm(Point,  (NPoint + 1) * sizeof(point_t),myQ);
+#else
 			Point  = (point_t *)realloc(Point,  (NPoint + 1) * sizeof(point_t));
+#endif
 			xpoint = (double *) realloc(xpoint, (NPoint + 1) * sizeof(double));
 			ypoint = (double *) realloc(ypoint, (NPoint + 1) * sizeof(double));
 			zpoint = (double *) realloc(zpoint, (NPoint + 1) * sizeof(double));

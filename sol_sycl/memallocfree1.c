@@ -349,10 +349,11 @@ void memfree1(void)
 	}
 
 	if (NPoint > 0) {
-		free(Point);
 #ifdef _ONEAPI
+		free_shm(Point);
 		free_shm(VPoint);
 #else
+		free(Point);
 		free(VPoint);
 #endif
 	}

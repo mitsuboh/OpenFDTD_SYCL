@@ -4,7 +4,14 @@ input2.c
 
 #include "ofd.h"
 #include "ofd_prototype.h"
+#ifdef _ONEAPI
+#undef C
+#include "ofd_dpcpp.h"
 
+void* realloc_shm(void* , size_t , const sycl::queue& );
+
+#endif
+#define C      (2.99792458e8)
 
 // index and length
 static void getindex(char dir, double x, double y, double z,
@@ -272,7 +279,11 @@ void setup_point(const double *x, const double *y, const double *z, const char s
 	}
 
 	// add 1+, 1- points
+#ifdef _ONEAPI
+	Point = (point_t *)realloc_shm(Point, (NPoint + 2) * sizeof(point_t),myQ);
+#else
 	Point = (point_t *)realloc(Point, (NPoint + 2) * sizeof(point_t));
+#endif
 	Point[NPoint] = Point[NPoint + 1] = Point[0];
 	if      (!strcmp(strprop, "+X") || !strcmp(strprop, "-X")) {
 		Point[NPoint].i     = Point[0].i + (!strcmp(strprop, "+X") ? +1 : -1);
