@@ -132,9 +132,15 @@ void memalloc1(void)
 		xsize = numPmlEx * sizeof(pml_t);
 		ysize = numPmlEy * sizeof(pml_t);
 		zsize = numPmlEz * sizeof(pml_t);
+#ifdef _ONEAPI
+		fPmlEx = (pml_t *)malloc_shm(xsize);
+		fPmlEy = (pml_t *)malloc_shm(ysize);
+		fPmlEz = (pml_t *)malloc_shm(zsize);
+#else
 		fPmlEx = (pml_t *)malloc(xsize);
 		fPmlEy = (pml_t *)malloc(ysize);
 		fPmlEz = (pml_t *)malloc(zsize);
+#endif
 		memset(fPmlEx, 0, xsize);
 		memset(fPmlEy, 0, ysize);
 		memset(fPmlEz, 0, zsize);
@@ -142,9 +148,15 @@ void memalloc1(void)
 		xsize = numPmlHx * sizeof(pml_t);
 		ysize = numPmlHy * sizeof(pml_t);
 		zsize = numPmlHz * sizeof(pml_t);
+#ifdef _ONEAPI
+		fPmlHx = (pml_t *)malloc_shm(xsize);
+		fPmlHy = (pml_t *)malloc_shm(ysize);
+		fPmlHz = (pml_t *)malloc_shm(zsize);
+#else
 		fPmlHx = (pml_t *)malloc(xsize);
 		fPmlHy = (pml_t *)malloc(ysize);
 		fPmlHz = (pml_t *)malloc(zsize);
+#endif
 		memset(fPmlHx, 0, xsize);
 		memset(fPmlHy, 0, ysize);
 		memset(fPmlHz, 0, zsize);
@@ -152,12 +164,21 @@ void memalloc1(void)
 		xsize = (Nx + (2 * cPML.l)) * sizeof(real_t);
 		ysize = (Ny + (2 * cPML.l)) * sizeof(real_t);
 		zsize = (Nz + (2 * cPML.l)) * sizeof(real_t);
+#ifdef _ONEAPI
+		gPmlXn = (real_t *)malloc_shm(xsize);
+		gPmlXc = (real_t *)malloc_shm(xsize);
+		gPmlYn = (real_t *)malloc_shm(ysize);
+		gPmlYc = (real_t *)malloc_shm(ysize);
+		gPmlZn = (real_t *)malloc_shm(zsize);
+		gPmlZc = (real_t *)malloc_shm(zsize);
+#else
 		gPmlXn = (real_t *)malloc(xsize);
 		gPmlXc = (real_t *)malloc(xsize);
 		gPmlYn = (real_t *)malloc(ysize);
 		gPmlYc = (real_t *)malloc(ysize);
 		gPmlZn = (real_t *)malloc(zsize);
 		gPmlZc = (real_t *)malloc(zsize);
+#endif
 		memset(gPmlXn, 0, xsize);
 		memset(gPmlXc, 0, xsize);
 		memset(gPmlYn, 0, ysize);
@@ -166,9 +187,15 @@ void memalloc1(void)
 		memset(gPmlZc, 0, zsize);
 
 		size = NMaterial * sizeof(real_t);
+#ifdef _ONEAPI
+		rPmlE = (real_t *)malloc_shm(size);
+		rPmlH = (real_t *)malloc_shm(size);
+		rPml  = (real_t *)malloc_shm(size);
+#else
 		rPmlE = (real_t *)malloc(size);
 		rPmlH = (real_t *)malloc(size);
 		rPml  = (real_t *)malloc(size);
+#endif
 		memset(rPmlE, 0, size);
 		memset(rPmlH, 0, size);
 		memset(rPml,  0, size);
@@ -266,6 +293,27 @@ void memfree1(void)
 #endif
 	}
 	else if (iABC == 1) {
+#ifdef _ONEAPI
+		free_shm(fPmlEx);
+		free_shm(fPmlEy);
+		free_shm(fPmlEz);
+
+		free_shm(fPmlHx);
+		free_shm(fPmlHy);
+		free_shm(fPmlHz);
+
+		free_shm(gPmlXn);
+		free_shm(gPmlYn);
+		free_shm(gPmlZn);
+
+		free_shm(gPmlXc);
+		free_shm(gPmlYc);
+		free_shm(gPmlZc);
+
+		free_shm(rPmlE);
+		free_shm(rPmlH);
+		free_shm(rPml);
+#else
 		free(fPmlEx);
 		free(fPmlEy);
 		free(fPmlEz);
@@ -285,6 +333,7 @@ void memfree1(void)
 		free(rPmlE);
 		free(rPmlH);
 		free(rPml);
+#endif
 	}
 
 	free(Xn);
