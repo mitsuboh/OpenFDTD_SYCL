@@ -3,11 +3,18 @@
 #define _OFD_H_
 
 #ifdef __cplusplus
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <cstdint>
+#include <cmath>
+#include <ctime>
+#include <cctype>
+#include <climits>
 #include <cassert>
+
 extern "C" {
 #else
-#include <assert.h>
-#endif
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +24,7 @@ extern "C" {
 #include <time.h>
 #include <ctype.h>
 #include <limits.h>
-//#include <assert.h>
+#endif
 
 #ifdef _OPENMP
 #include <omp.h>
