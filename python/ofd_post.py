@@ -53,7 +53,7 @@ def main():
     # [1] 時間変化 (2D)
     post.plot_iter.plot(Post, Freq1, Eiter, Hiter, Iiter, Niter, VFeed, IFeed, VPoint, Ntime)
 
-    # [2] 周波数特性　(2D)
+    # [2] 周波数特性 (2D)
     post.plot_fchar.plot(Post, Freq1, Freq2, Zin, Ref, Pin, Spara, Coupling, fSurface, cSurface)
 
     # [3] 遠方界面内 (2D)

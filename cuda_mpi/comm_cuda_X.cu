@@ -19,6 +19,7 @@ static void _d2h(int i, int j, int k, real_t *h, real_t *buf, int j0, int j1, in
 	const int64_t m = (j - j0) * (k1 - k0 + 1) + (k - k0);
 	const int64_t n = (p->Ni * i) + (p->Nj * j) + (p->Nk * k) + p->N0;
 	buf[m] = h[n];
+	j1 = j1;  // dummy
 }
 __global__
 static void d2h_gpu(int i, real_t *h, real_t *buf, int j0, int j1, int k0, int k1)
@@ -69,6 +70,7 @@ static void _h2d(int i, int j, int k, real_t *h, real_t *buf, int j0, int j1, in
 	const int64_t m = (j - j0) * (k1 - k0 + 1) + (k - k0);
 	const int64_t n = (p->Ni * i) + (p->Nj * j) + (p->Nk * k) + p->N0;
 	h[n] = buf[m];
+	j1 = j1;  // dummy
 }
 __global__
 static void h2d_gpu(int i, real_t *h, real_t *buf, int j0, int j1, int k0, int k1)

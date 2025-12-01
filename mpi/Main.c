@@ -32,7 +32,10 @@ int main(int argc, char *argv[])
 	int prompt = 0;
 	char fn_in[BUFSIZ] = "";
 	char fn_out[BUFSIZ] = "ofd.out";
-	args(argc, argv, &nthread, &prompt, fn_in, fn_out);
+	char fn_feed[BUFSIZ] = "feed.log";
+	char fn_point[BUFSIZ] = "point.log";
+	args(argc, argv, &nthread, &ilog, &prompt, fn_in, fn_out, fn_feed, fn_point);
+	ilog &= io;
 
 	// set number of threads
 #ifdef _OPENMP

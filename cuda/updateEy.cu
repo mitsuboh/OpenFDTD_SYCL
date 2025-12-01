@@ -9,7 +9,7 @@ update Ey
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEy_f_vector(
 	int i, int j, int k,
 	real_t ey[], const real_t hz[], const real_t hx[],
@@ -24,7 +24,7 @@ static void updateEy_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEy_f_no_vector(
 	int i, int j, int k,
 	real_t ey[], const real_t hz[], const real_t hx[], const id_t iey[],
@@ -40,7 +40,7 @@ static void updateEy_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEy_p_vector(
 	int i, int j, int k,
 	real_t ey[], const real_t hz[], const real_t hx[], const id_t iey[],
@@ -72,7 +72,7 @@ static void updateEy_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEy_p_no_vector(
 	int i, int j, int k,
 	real_t ey[], const real_t hz[], const real_t hx[], const id_t iey[],

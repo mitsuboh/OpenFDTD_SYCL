@@ -9,7 +9,7 @@ update Ex
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEx_f_vector(
 	int i, int j, int k,
 	real_t ex[], const real_t hy[], const real_t hz[],
@@ -24,7 +24,7 @@ static void updateEx_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEx_f_no_vector(
 	int i, int j, int k,
 	real_t ex[], const real_t hy[], const real_t hz[], const id_t iex[],
@@ -40,7 +40,7 @@ static void updateEx_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEx_p_vector(
 	int i, int j, int k,
 	real_t ex[], const real_t hy[], const real_t hz[], const id_t iex[],
@@ -72,7 +72,7 @@ static void updateEx_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEx_p_no_vector(
 	int i, int j, int k,
 	real_t ex[], const real_t hy[], const real_t hz[], const id_t iex[],

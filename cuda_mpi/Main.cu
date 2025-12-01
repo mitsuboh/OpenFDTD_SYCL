@@ -36,7 +36,10 @@ int main(int argc, char *argv[])
 	int ndevice[256];
 	char fn_in[BUFSIZ] = "";
 	char fn_out[BUFSIZ] = "ofd.out";
-	args(argc, argv, &nhost, ndevice, &prompt, fn_in, fn_out);
+	char fn_feed[BUFSIZ] = "feed.log";
+	char fn_point[BUFSIZ] = "point.log";
+	args(argc, argv, &nhost, ndevice, &ilog, &prompt, fn_in, fn_out, fn_feed, fn_point);
+	ilog &= io;
 
 	// cpu time
 	if (GPU) cudaDeviceSynchronize();

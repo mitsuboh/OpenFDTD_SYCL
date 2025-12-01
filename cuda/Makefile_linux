@@ -58,8 +58,8 @@ setupId.o           \
 ../sol/vfeed.o             \
 ../sol/nearfield_c.o       \
 ../sol/outputChars.o       \
-../sol/outputZin.o         \
-../sol/outputSpara.o       \
+../sol/outputFeed.o        \
+../sol/outputPoint.o       \
 ../sol/outputCoupling.o    \
 ../sol/outputCross.o       \
 ../sol/ingeometry.o        \

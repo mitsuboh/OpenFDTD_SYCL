@@ -9,7 +9,7 @@ update Ez
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEz_f_vector(
 	int i, int j, int k,
 	real_t ez[], const real_t hx[], const real_t hy[],
@@ -24,7 +24,7 @@ static void updateEz_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEz_f_no_vector(
 	int i, int j, int k,
 	real_t ez[], const real_t hx[], const real_t hy[], const id_t iez[],
@@ -40,7 +40,7 @@ static void updateEz_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEz_p_vector(
 	int i, int j, int k,
 	real_t ez[], const real_t hx[], const real_t hy[], const id_t iez[],
@@ -72,7 +72,7 @@ static void updateEz_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateEz_p_no_vector(
 	int i, int j, int k,
 	real_t ez[], const real_t hx[], const real_t hy[], const id_t iez[],

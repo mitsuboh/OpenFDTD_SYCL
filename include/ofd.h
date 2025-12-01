@@ -24,6 +24,7 @@ extern "C" {
 #include <time.h>
 #include <ctype.h>
 #include <limits.h>
+#include <assert.h>
 #endif
 
 #ifdef _OPENMP
@@ -33,7 +34,7 @@ extern "C" {
 #define PROGRAM "OpenFDTD"
 #define VERSION_MAJOR (4)
 #define VERSION_MINOR (3)
-#define VERSION_BUILD (0)
+#define VERSION_BUILD (1)
 
 #ifdef MAIN
 #define EXTERN

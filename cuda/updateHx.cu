@@ -9,7 +9,7 @@ update Hx
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHx_f_vector(
 	int i, int j, int k,
 	real_t hx[], const real_t ey[], const real_t ez[],
@@ -24,7 +24,7 @@ static void updateHx_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHx_f_no_vector(
 	int i, int j, int k,
 	real_t hx[], const real_t ey[], const real_t ez[], const id_t ihx[],
@@ -40,7 +40,7 @@ static void updateHx_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHx_p_vector(
 	int i, int j, int k,
 	real_t hx[], const real_t ey[], const real_t ez[], const id_t ihx[],
@@ -72,7 +72,7 @@ static void updateHx_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHx_p_no_vector(
 	int i, int j, int k,
 	real_t hx[], const real_t ey[], const real_t ez[], const id_t ihx[],

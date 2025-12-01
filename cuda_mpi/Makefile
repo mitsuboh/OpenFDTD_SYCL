@@ -1,9 +1,8 @@
 PROGRAM = ../ofd_cuda_mpi.exe
 
-TRASH   = ..\ofd_cuda_mpi.exp ..\ofd_cuda_mpi.lib
-
 #MPIOPT  = -D_MPI -I../../../../progra~2/micros~1/MPI/Include
 MPIOPT  = -D_MPI -I"C:\Program Files (x86)\Microsoft SDKs\MPI\Include"
+#MPIOPT  = -D_MPI -I@$(MSMPI_INC)
 
 OBJS    =             \
 Main.obj              \
@@ -82,7 +81,7 @@ rank2device.obj       \
 ../mpi/comm.obj
 
 CC      = nvcc.exe
-CFLAGS  = -O2 -I../include
+CFLAGS  = -O2 -I../include -allow-unsupported-compiler -Xcompiler "/wd4819 /W4"
 #CFLAGS  = $(CFLAGS) -D_DOUBLE
 #CFLAGS  = $(CFLAGS) -D_ID32
 LDFLAGS = -O2
@@ -91,7 +90,6 @@ LIBS    = msmpi.lib
 $(PROGRAM): $(OBJS)
 	@echo "Loading $(PROGRAM) ... "
 	@$(CC) -o $(PROGRAM) $(LDFLAGS) $(OBJS) $(LIBS)
-	del $(TRASH)
 
 .SUFFIXES: .cu
 

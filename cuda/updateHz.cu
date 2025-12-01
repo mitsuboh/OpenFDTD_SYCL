@@ -9,7 +9,7 @@ update Hz
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHz_f_vector(
 	int i, int j, int k,
 	real_t hz[], const real_t ex[], const real_t ey[],
@@ -24,7 +24,7 @@ static void updateHz_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHz_f_no_vector(
 	int i, int j, int k,
 	real_t hz[], const real_t ex[], const real_t ey[], const id_t ihz[],
@@ -40,7 +40,7 @@ static void updateHz_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHz_p_vector(
 	int i, int j, int k,
 	real_t hz[], const real_t ex[], const real_t ey[], const id_t ihz[],
@@ -72,7 +72,7 @@ static void updateHz_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHz_p_no_vector(
 	int i, int j, int k,
 	real_t hz[], const real_t ex[], const real_t ey[], const id_t ihz[],

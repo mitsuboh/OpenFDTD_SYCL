@@ -9,7 +9,7 @@ update Hy
 #include "finc_cuda.h"
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHy_f_vector(
 	int i, int j, int k,
 	real_t hy[], const real_t ez[], const real_t ex[],
@@ -24,7 +24,7 @@ static void updateHy_f_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHy_f_no_vector(
 	int i, int j, int k,
 	real_t hy[], const real_t ez[], const real_t ex[], const id_t ihy[],
@@ -40,7 +40,7 @@ static void updateHy_f_no_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHy_p_vector(
 	int i, int j, int k,
 	real_t hy[], const real_t ez[], const real_t ex[], const id_t ihy[],
@@ -72,7 +72,7 @@ static void updateHy_p_vector(
 }
 
 
-__host__ __device__
+__host__ __device__ __forceinline__
 static void updateHy_p_no_vector(
 	int i, int j, int k,
 	real_t hy[], const real_t ez[], const real_t ex[], const id_t ihy[],

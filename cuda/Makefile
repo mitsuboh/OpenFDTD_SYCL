@@ -1,7 +1,5 @@
 PROGRAM = ../ofd_cuda.exe
 
-TRASH   = ..\ofd_cuda.exp ..\ofd_cuda.lib
-
 OBJS    =             \
 Main.obj              \
 info_gpu.obj          \
@@ -60,8 +58,8 @@ average.obj           \
 ../sol/vfeed.obj             \
 ../sol/nearfield_c.obj       \
 ../sol/outputChars.obj       \
-../sol/outputZin.obj         \
-../sol/outputSpara.obj       \
+../sol/outputFeed.obj        \
+../sol/outputPoint.obj       \
 ../sol/outputCoupling.obj    \
 ../sol/outputCross.obj       \
 ../sol/ingeometry.obj        \
@@ -74,16 +72,17 @@ average.obj           \
 ../sol/ev3d.obj
 
 CC      = nvcc.exe
-CFLAGS  = -O2 -I../include
+CFLAGS  = -O2 -I../include -allow-unsupported-compiler -Xcompiler "/wd4819 /W4"
 #CFLAGS  = $(CFLAGS) -D_DOUBLE
 #CFLAGS  = $(CFLAGS) -D_ID32
+#LDFLAGS = -O2 -Wno-deprecated-gpu-targets
 LDFLAGS = -O2
 LIBS    =
 
 $(PROGRAM): $(OBJS)
 	@echo "Loading $(PROGRAM) ... "
 	@$(CC) -o $(PROGRAM) $(LDFLAGS) $(OBJS) $(LIBS)
-	del $(TRASH)
+#	del $(TRASH)
 
 .SUFFIXES: .cu
 
